@@ -239,7 +239,8 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 z-[110]"
+            className="fixed inset-0 bg-black/25 dark:bg-black/50 z-[110]"
+            style={{backdropFilter:'blur(4px)',WebkitBackdropFilter:'blur(4px)'}}
             onClick={onClose}
           />
           <motion.div
@@ -247,31 +248,31 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.2 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl max-h-[85vh] bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl z-[111] flex flex-col overflow-hidden"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl max-h-[85vh] bg-card rounded-xl border border-black/[0.06] dark:border-white/[0.06] shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-[111] flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="px-6 py-5 border-b border-neutral-100 dark:border-neutral-800">
+            <div className="px-6 py-5 border-b border-black/[0.06] dark:border-white/[0.06]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <Avatar className="w-12 h-12 ring-2 ring-neutral-100 dark:ring-neutral-700">
+                  <Avatar className="w-12 h-12 rounded-full">
                     <AvatarImage src={chat.type === 'group' 
                       ? `https://p.qlogo.cn/gh/${chat.id}/${chat.id}/40`
                       : `https://q1.qlogo.cn/g?b=qq&nk=${chat.id}&s=40`
                     } />
-                    <AvatarFallback className="bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400">
+                    <AvatarFallback className="bg-muted text-muted-foreground">
                       {chat.type === 'group' ? <Users className="w-5 h-5" /> : <User className="w-5 h-5" />}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h2 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{chat.name}</h2>
-                    <p className="text-sm text-neutral-500 dark:text-neutral-400">
+                    <h2 className="text-lg font-semibold text-foreground">{chat.name}</h2>
+                    <p className="text-sm text-muted-foreground">
                       {chat.type === 'group' ? '群聊' : '好友'} · {totalCount.toLocaleString()} 条消息
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
-                  className="p-2 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg transition-colors"
+                  className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg transition-colors"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -279,10 +280,10 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
             </div>
 
             {/* Filters */}
-            <div className="px-6 py-4 bg-neutral-50 dark:bg-neutral-800/50 border-b border-neutral-100 dark:border-neutral-800 space-y-3">
+            <div className="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.06] space-y-3">
               {/* Time Range */}
               <div className="flex items-center gap-3 flex-wrap">
-                <div className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <CalendarIcon className="w-4 h-4" />
                   <span>时间:</span>
                 </div>
@@ -290,14 +291,14 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
                   type="date"
                   value={startDate}
                   onChange={(e) => { setStartDate(e.target.value); validateTimeRange(e.target.value, endDate) }}
-                  className="px-3 py-1.5 text-sm border border-neutral-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-800 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:focus:ring-neutral-600"
+                  className="px-3 py-1.5 text-sm border border-black/[0.06] dark:border-white/[0.06] rounded-lg bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20"
                 />
-                <span className="text-neutral-400">—</span>
+                <span className="text-muted-foreground/40">—</span>
                 <input
                   type="date"
                   value={endDate}
                   onChange={(e) => { setEndDate(e.target.value); validateTimeRange(startDate, e.target.value) }}
-                  className="px-3 py-1.5 text-sm border border-neutral-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-800 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:focus:ring-neutral-600"
+                  className="px-3 py-1.5 text-sm border border-black/[0.06] dark:border-white/[0.06] rounded-lg bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20"
                 />
                 <Button 
                   variant="outline" 
@@ -311,7 +312,7 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
                 {(startDate || endDate) && (
                   <button
                     onClick={() => { setStartDate(""); setEndDate(""); setTimeRangeError(null); setCurrentFilter(null); fetchMessages(1) }}
-                    className="text-sm text-neutral-500 hover:text-neutral-300"
+                    className="text-sm text-muted-foreground hover:text-foreground"
                   >
                     清除
                   </button>
@@ -321,19 +322,19 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
 
               {/* Search */}
               <div className="flex items-center gap-3">
-                <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg focus-within:ring-2 focus-within:ring-neutral-200 dark:focus-within:ring-neutral-600">
-                  <Search className="w-4 h-4 text-neutral-400 dark:text-neutral-500" />
+                <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-transparent border border-black/[0.06] dark:border-white/[0.06] rounded-lg focus-within:ring-1 focus-within:ring-foreground/20">
+                  <Search className="w-4 h-4 text-muted-foreground/60" />
                   <input
                     type="text"
                     placeholder="搜索消息内容..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                    className="flex-1 text-sm bg-transparent outline-none dark:text-neutral-200 dark:placeholder:text-neutral-500"
+                    className="flex-1 text-sm bg-transparent outline-none text-foreground placeholder:text-muted-foreground/60"
                   />
                   {searchQuery && (
                     <button onClick={() => { setSearchQuery(""); setUseStreamMode(false); setSearchProgress(""); fetchMessages(1) }}>
-                      <X className="w-4 h-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300" />
+                      <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
                     </button>
                   )}
                 </div>
@@ -352,8 +353,8 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
               <div className="p-6">
                 {loading && (
                   <div className="flex flex-col items-center justify-center py-12">
-                    <RefreshCw className="w-8 h-8 text-neutral-300 dark:text-neutral-600 animate-spin mb-3" />
-                    <p className="text-sm text-neutral-500 dark:text-neutral-400">加载中...</p>
+                    <RefreshCw className="w-8 h-8 text-muted-foreground/40 animate-spin mb-3" />
+                    <p className="text-sm text-muted-foreground">加载中...</p>
                   </div>
                 )}
 
@@ -366,8 +367,8 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
 
                 {!loading && !error && messages.length === 0 && (
                   <div className="flex flex-col items-center justify-center py-12">
-                    <MessageSquare className="w-12 h-12 text-neutral-200 dark:text-neutral-700 mb-3" />
-                    <p className="text-neutral-500 dark:text-neutral-400">{searchQuery ? '没有找到匹配的消息' : '暂无消息'}</p>
+                    <MessageSquare className="w-12 h-12 text-muted-foreground/30 mb-3" />
+                    <p className="text-muted-foreground">{searchQuery ? '没有找到匹配的消息' : '暂无消息'}</p>
                   </div>
                 )}
 
@@ -380,25 +381,25 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
                           key={`${msg.msgId}-${idx}`}
                           className={cn(
                             "flex gap-3 p-3 rounded-xl transition-colors",
-                            isFromSelf ? "bg-blue-50/50 dark:bg-blue-900/20 ml-8" : "bg-neutral-50 dark:bg-neutral-800/50 mr-8"
+                            isFromSelf ? "bg-blue-50/50 dark:bg-blue-900/20 ml-8" : "bg-black/[0.02] dark:bg-white/[0.03] mr-8"
                           )}
                         >
-                          <Avatar className="w-9 h-9 flex-shrink-0">
+                          <Avatar className="w-9 h-9 flex-shrink-0 rounded-full">
                             <AvatarImage src={`https://q1.qlogo.cn/g?b=qq&nk=${msg.senderUin}&s=40`} />
-                            <AvatarFallback className="text-xs bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300">
+                            <AvatarFallback className="text-xs bg-muted text-muted-foreground">
                               {(msg.sendMemberName || msg.sendNickName || '?')[0]}
                             </AvatarFallback>
                           </Avatar>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-sm font-medium text-neutral-800 dark:text-neutral-200 truncate">
+                              <span className="text-sm font-medium text-foreground truncate">
                                 {msg.sendMemberName || msg.sendNickName || `用户${msg.senderUin}`}
                               </span>
-                              <span className="text-xs text-neutral-400 dark:text-neutral-500">
+                              <span className="text-xs text-muted-foreground/60">
                                 {format(new Date(msg.msgTime * 1000), 'MM-dd HH:mm')}
                               </span>
                             </div>
-                            <p className="text-sm text-neutral-700 dark:text-neutral-300 break-words leading-relaxed">
+                            <p className="text-sm text-foreground break-words leading-relaxed">
                               {formatMessageContent(msg.elements)}
                             </p>
                           </div>
@@ -411,7 +412,7 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
             </div>
 
             {/* Footer */}
-            <div className="px-6 py-4 border-t border-neutral-100 dark:border-neutral-800 bg-white dark:bg-neutral-900 flex items-center justify-between">
+            <div className="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.06] bg-card flex items-center justify-between">
               {/* Pagination */}
               {!useStreamMode && totalPages > 1 ? (
                 <div className="flex items-center gap-2">
@@ -423,7 +424,7 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </Button>
-                  <span className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <span className="text-sm text-muted-foreground">
                     {currentPage} / {totalPages}
                   </span>
                   <Button

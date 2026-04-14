@@ -165,7 +165,7 @@ export function SessionList({
       <div
         key={`${item.type}_${item.id}`}
         className={[
-          "group flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-[13px]",
+          "group flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-sm",
           batchMode
             ? isSelected
               ? "bg-blue-50/50 dark:bg-blue-950/20 cursor-pointer"
@@ -182,16 +182,16 @@ export function SessionList({
           />
         )}
         
-        <Avatar className="w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+        <Avatar className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
           <AvatarImage src={item.avatarUrl} alt={item.name} />
-          <AvatarFallback className="rounded-lg text-xs">
+          <AvatarFallback className="rounded-full text-xs">
             {item.name.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <p className="text-[13px] font-medium text-foreground truncate">{item.name}</p>
+            <p className="text-sm font-medium text-foreground truncate">{item.name}</p>
             {isGroup ? (
               <Users className="w-3 h-3 text-muted-foreground/40 flex-shrink-0" />
             ) : (
@@ -201,7 +201,7 @@ export function SessionList({
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />
             )}
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/50">
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground/50">
             {isGroup && group && (
               <>
                 <span>{group.memberCount} 成员</span>
@@ -221,11 +221,11 @@ export function SessionList({
         </div>
 
         {!batchMode && (
-          <div className="flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center gap-1 flex-shrink-0">
             <Button
               size="sm"
               variant="outline"
-              className="h-6 px-2 text-[11px] rounded-md"
+              className="h-8 px-3 text-xs rounded-lg"
               onClick={(e: React.MouseEvent) => {
                 e.stopPropagation()
                 onPreviewChat?.(item.type, item.id, item.name, { 
@@ -238,7 +238,7 @@ export function SessionList({
             </Button>
             <Button
               size="sm"
-              className="h-6 px-2 text-[11px] rounded-md"
+              className="h-8 px-3 text-xs rounded-lg"
               onClick={(e: React.MouseEvent) => {
                 e.stopPropagation()
                 onOpenTaskWizard?.({
@@ -255,7 +255,7 @@ export function SessionList({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-6 px-2 text-[11px] rounded-md"
+                  className="h-8 px-3 text-xs rounded-lg"
                   disabled={avatarExportLoading === group.groupCode}
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation()
@@ -267,7 +267,7 @@ export function SessionList({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-6 px-2 text-[11px] rounded-md"
+                  className="h-8 px-3 text-xs rounded-lg"
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation()
                     onOpenEssenceModal?.(group.groupCode, group.groupName)
@@ -278,7 +278,7 @@ export function SessionList({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-6 px-2 text-[11px] rounded-md"
+                  className="h-8 px-3 text-xs rounded-lg"
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation()
                     onOpenGroupFilesModal?.(group.groupCode, group.groupName)
@@ -306,7 +306,7 @@ export function SessionList({
             placeholder="搜索会话名称、备注或 ID... (按 / 聚焦)"
             value={search}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
-            className="pl-8 pr-8 h-8 text-[13px] rounded-lg border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03]"
+            className="pl-8 pr-8 h-10 text-sm rounded-lg border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03]"
           />
           {search && (
             <button
@@ -322,7 +322,7 @@ export function SessionList({
         <div className="flex items-center gap-1.5">
           {/* Type Filter */}
           <Select value={type} onValueChange={(v: string) => setType(v as SessionType)}>
-            <SelectTrigger className="w-[120px] h-8 text-[12px] rounded-lg">
+            <SelectTrigger className="w-[120px] h-10 text-sm rounded-lg">
               <SelectValue placeholder="全部类型" />
             </SelectTrigger>
             <SelectContent>
@@ -334,7 +334,7 @@ export function SessionList({
 
           {/* Sort Field */}
           <Select value={sortField} onValueChange={(v: string) => setSortField(v as SortField)}>
-            <SelectTrigger className="w-[100px] h-8 text-[12px] rounded-lg">
+            <SelectTrigger className="w-[100px] h-10 text-sm rounded-lg">
               <SelectValue placeholder="排序" />
             </SelectTrigger>
             <SelectContent>
@@ -348,7 +348,7 @@ export function SessionList({
           <Button
             variant="outline"
             size="icon"
-            className="h-8 w-8 rounded-lg"
+            className="h-10 w-10 rounded-lg"
             onClick={handleToggleSort}
           >
             {sortOrder === 'asc' ? (
@@ -363,7 +363,7 @@ export function SessionList({
             <Button
               variant="ghost"
               size="sm"
-              className="h-8 rounded-lg text-[12px] text-muted-foreground hover:text-foreground"
+              className="h-10 rounded-lg text-sm text-muted-foreground hover:text-foreground"
               onClick={resetFilters}
             >
               <X className="w-3.5 h-3.5 mr-1" />
@@ -376,7 +376,7 @@ export function SessionList({
       {/* Stats and Batch Actions */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="text-[12px] text-muted-foreground/60">
+          <span className="text-sm text-muted-foreground/60">
             {hasActiveFilters ? (
               <>找到 <span className="font-medium text-foreground/80">{totalItems}</span> 个会话</>
             ) : (
@@ -430,14 +430,14 @@ export function SessionList({
         <div className="py-16 text-center">
           {groups.length === 0 && friends.length === 0 ? (
             <>
-              <p className="text-[13px] text-foreground">暂无会话数据</p>
-              <p className="text-[12px] text-muted-foreground/60 mt-1">请确认 QQ 已连接，然后点击 &quot;刷新列表&quot;</p>
+              <p className="text-sm text-foreground">暂无会话数据</p>
+              <p className="text-xs text-muted-foreground/60 mt-1">请确认 QQ 已连接，然后点击 &quot;刷新列表&quot;</p>
             </>
           ) : (
             <>
-              <Filter className="w-8 h-8 text-muted-foreground/20 mx-auto mb-3" />
-              <p className="text-[13px] text-foreground">没有符合条件的会话</p>
-              <p className="text-[12px] text-muted-foreground/60 mt-1">
+              <Filter className="w-10 h-10 text-muted-foreground/20 mx-auto mb-3" />
+              <p className="text-sm text-foreground">没有符合条件的会话</p>
+              <p className="text-xs text-muted-foreground/60 mt-1">
                 尝试调整搜索条件或
                 <button 
                   onClick={resetFilters}
@@ -457,7 +457,7 @@ export function SessionList({
 
       {/* Keyboard Shortcuts Hint */}
       {totalItems > 0 && (
-        <div className="flex items-center justify-center gap-4 text-[11px] text-muted-foreground/40">
+        <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground/40">
           <Keyboard className="w-3 h-3" />
           {KEYBOARD_SHORTCUTS.map((shortcut, idx) => (
             <span key={idx} className="flex items-center gap-1">
@@ -472,9 +472,9 @@ export function SessionList({
       {totalPages > 1 && (
         <div className="flex items-center justify-between pt-3 border-t border-black/[0.04] dark:border-white/[0.04]">
           <div className="flex items-center gap-1.5">
-            <span className="text-[12px] text-muted-foreground/60">每页</span>
+            <span className="text-sm text-muted-foreground/60">每页</span>
             <Select value={pageSize.toString()} onValueChange={(v: string) => setPageSize(Number(v))}>
-              <SelectTrigger className="w-[72px] h-7 text-[12px] rounded-md">
+              <SelectTrigger className="w-[72px] h-8 text-sm rounded-lg">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -485,14 +485,14 @@ export function SessionList({
                 ))}
               </SelectContent>
             </Select>
-            <span className="text-[12px] text-muted-foreground/60">条</span>
+            <span className="text-sm text-muted-foreground/60">条</span>
           </div>
 
           <div className="flex items-center gap-0.5">
             <Button
               variant="outline"
               size="icon"
-              className="h-7 w-7 rounded-md"
+              className="h-8 w-8 rounded-lg"
               disabled={page === 1}
               onClick={() => setPage(1)}
             >
@@ -501,7 +501,7 @@ export function SessionList({
             <Button
               variant="outline"
               size="icon"
-              className="h-7 w-7 rounded-md"
+              className="h-8 w-8 rounded-lg"
               disabled={!hasPrevPage}
               onClick={() => setPage(page - 1)}
             >
@@ -509,15 +509,15 @@ export function SessionList({
             </Button>
             
             <div className="flex items-center gap-1 px-2">
-              <span className="text-[12px] font-medium">{page}</span>
-              <span className="text-[12px] text-muted-foreground/50">/</span>
-              <span className="text-[12px] text-muted-foreground/50">{totalPages}</span>
+              <span className="text-sm font-medium">{page}</span>
+              <span className="text-sm text-muted-foreground/50">/</span>
+              <span className="text-sm text-muted-foreground/50">{totalPages}</span>
             </div>
 
             <Button
               variant="outline"
               size="icon"
-              className="h-7 w-7 rounded-md"
+              className="h-8 w-8 rounded-lg"
               disabled={!hasNextPage}
               onClick={() => setPage(page + 1)}
             >
@@ -526,7 +526,7 @@ export function SessionList({
             <Button
               variant="outline"
               size="icon"
-              className="h-7 w-7 rounded-md"
+              className="h-8 w-8 rounded-lg"
               disabled={page === totalPages}
               onClick={() => setPage(totalPages)}
             >
@@ -534,7 +534,7 @@ export function SessionList({
             </Button>
           </div>
 
-          <div className="text-[12px] text-muted-foreground/50">
+          <div className="text-sm text-muted-foreground/50">
             {(page - 1) * pageSize + 1} - {Math.min(page * pageSize, totalItems)} / {totalItems}
           </div>
         </div>
