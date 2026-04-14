@@ -1016,9 +1016,9 @@ export default function QCEDashboard() {
               <div className="flex items-center px-4 h-14 flex-shrink-0">
                 {systemInfo?.napcat.selfInfo ? (
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <Avatar className="w-7 h-7 flex-shrink-0">
-                      <AvatarImage src={`http://q.qlogo.cn/g?b=qq&nk=${systemInfo.napcat.selfInfo.uin}&s=100`} />
-                      <AvatarFallback className="text-[11px]">{systemInfo.napcat.selfInfo.nick?.[0] || 'Q'}</AvatarFallback>
+                    <Avatar className="w-7 h-7 flex-shrink-0 rounded-full">
+                      <AvatarImage src={`http://q.qlogo.cn/g?b=qq&nk=${systemInfo.napcat.selfInfo.uin}&s=100`} className="rounded-full" />
+                      <AvatarFallback className="text-[11px] rounded-full">{systemInfo.napcat.selfInfo.nick?.[0] || 'Q'}</AvatarFallback>
                     </Avatar>
                     <span className="text-[13px] font-semibold text-foreground truncate">{systemInfo.napcat.selfInfo.nick}</span>
                   </div>
@@ -1121,7 +1121,7 @@ export default function QCEDashboard() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden sm:m-2 sm:rounded-xl sm:border sm:border-black/[0.05] sm:shadow-[0_2px_8px_rgba(0,0,0,0.015)] bg-card dark:border-white/[0.06]">
         {/* Page header bar */}
-        <div className="flex flex-shrink-0 items-center justify-between border-b border-black/[0.06] dark:border-white/[0.06] px-4 h-11">
+        <div className="flex flex-shrink-0 items-center justify-between border-b border-black/[0.06] dark:border-white/[0.06] px-4 h-12">
           <div className="flex items-center gap-2 text-[14px]">
             <button
               onClick={() => {
@@ -1139,22 +1139,22 @@ export default function QCEDashboard() {
             <span className="text-neutral-300 dark:text-neutral-600">/</span>
             <span className="font-semibold text-foreground">{pageTitles[activeTab] || activeTab}</span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             {/* Page-specific actions */}
             {activeTab === "overview" && (
-              <Button size="sm" className="h-7 text-[12px] rounded-md px-2.5" onClick={() => handleOpenTaskWizard()}>
+              <Button size="sm" className="h-8 text-[13px] rounded-md px-2.5" onClick={() => handleOpenTaskWizard()}>
                 新建任务
               </Button>
             )}
             {activeTab === "sessions" && (
               <>
-                <Button size="sm" variant="ghost" className="h-7 text-[12px] rounded-md px-2" onClick={loadChatData} disabled={isLoading}>
-                  <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
+                <Button size="sm" variant="ghost" className="h-8 text-[13px] rounded-md px-2" onClick={loadChatData} disabled={isLoading}>
+                  <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
                 <Button
                   size="sm"
                   variant={batchMode ? "default" : "ghost"}
-                  className="h-7 text-[12px] rounded-md px-2.5"
+                  className="h-8 text-[13px] rounded-md px-2.5"
                   onClick={handleToggleBatchMode}
                 >
                   {batchMode ? "退出批量" : "批量导出"}
@@ -1167,10 +1167,10 @@ export default function QCEDashboard() {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="h-7 text-[12px] rounded-md px-2"
+                    className="h-8 text-[13px] rounded-md px-2"
                     onClick={() => setShowExportHelpMenu(!showExportHelpMenu)}
                   >
-                    <HelpCircle className="w-3.5 h-3.5" />
+                    <HelpCircle className="w-4 h-4" />
                   </Button>
                   <AnimatePresence>
                     {showExportHelpMenu && (
@@ -1237,10 +1237,10 @@ export default function QCEDashboard() {
                     )}
                   </AnimatePresence>
                 </div>
-                <Button size="sm" variant="ghost" className="h-7 text-[12px] rounded-md px-2" onClick={handleLoadTasks} disabled={isLoading}>
-                  <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
+                <Button size="sm" variant="ghost" className="h-8 text-[13px] rounded-md px-2" onClick={handleLoadTasks} disabled={isLoading}>
+                  <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
-                <Button size="sm" className="h-7 text-[12px] rounded-md px-2.5" onClick={() => handleOpenTaskWizard()}>
+                <Button size="sm" className="h-8 text-[13px] rounded-md px-2.5" onClick={() => handleOpenTaskWizard()}>
                   新建任务
                 </Button>
               </>
@@ -1250,23 +1250,23 @@ export default function QCEDashboard() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-7 text-[12px] rounded-md px-2"
+                  className="h-8 text-[13px] rounded-md px-2"
                   onClick={handleLoadScheduledExports}
                   disabled={scheduledLoading}
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 ${scheduledLoading ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-4 h-4 ${scheduledLoading ? 'animate-spin' : ''}`} />
                 </Button>
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-7 text-[12px] rounded-md px-2.5"
+                  className="h-8 text-[13px] rounded-md px-2.5"
                   onClick={handleOpenScheduledMergeDialog}
                   disabled={loadingScheduledTasks}
                 >
-                  <Combine className="w-3.5 h-3.5 mr-1" />
+                  <Combine className="w-4 h-4 mr-1" />
                   合并
                 </Button>
-                <Button size="sm" className="h-7 text-[12px] rounded-md px-2.5" onClick={() => handleOpenScheduledExportWizard()}>
+                <Button size="sm" className="h-8 text-[13px] rounded-md px-2.5" onClick={() => handleOpenScheduledExportWizard()}>
                   新建定时任务
                 </Button>
               </>
@@ -1275,7 +1275,7 @@ export default function QCEDashboard() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="h-7 text-[12px] rounded-md px-2"
+                className="h-8 text-[13px] rounded-md px-2"
                 onClick={async () => {
                   chatHistoryLoadedRef.current = false
                   resourceIndexLoadedRef.current = false
@@ -1285,7 +1285,7 @@ export default function QCEDashboard() {
                 }}
                 disabled={chatHistoryLoading || resourceIndexLoading}
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${(chatHistoryLoading || resourceIndexLoading) ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-4 h-4 ${(chatHistoryLoading || resourceIndexLoading) ? 'animate-spin' : ''}`} />
               </Button>
             )}
             {activeTab === "stickers" && (
@@ -1293,7 +1293,7 @@ export default function QCEDashboard() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-7 text-[12px] rounded-md px-2"
+                  className="h-8 text-[13px] rounded-md px-2"
                   onClick={async () => {
                     stickerPacksLoadedRef.current = false
                     try {
@@ -1306,15 +1306,15 @@ export default function QCEDashboard() {
                   }}
                   disabled={stickerPacksLoading}
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 ${stickerPacksLoading ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`w-4 h-4 ${stickerPacksLoading ? 'animate-spin' : ''}`} />
                 </Button>
                 <Button
                   size="sm"
-                  className="h-7 text-[12px] rounded-md px-2.5"
+                  className="h-8 text-[13px] rounded-md px-2.5"
                   onClick={handleExportAllStickerPacks}
                   disabled={stickerPacksLoading || stickerPacks.length === 0}
                 >
-                  <Download className="w-3.5 h-3.5 mr-1" />
+                  <Download className="w-4 h-4 mr-1" />
                   导出所有
                 </Button>
               </>
@@ -1327,121 +1327,126 @@ export default function QCEDashboard() {
           <>
             {/* ==================== OVERVIEW ==================== */}
             {activeTab === "overview" && (
-              <div className="p-5 space-y-5">
-                {/* Compact inline stats bar */}
-                <div className="flex items-center rounded-lg border border-black/[0.06] dark:border-white/[0.06] bg-card">
-                  <div className="flex-1 border-r border-black/[0.04] dark:border-white/[0.06] px-4 py-3">
-                    <div className="text-[12px] text-muted-foreground">导出任务</div>
-                    <div className="text-[20px] font-semibold tracking-tight mt-0.5">{getTaskStats().total}</div>
-                    <div className="text-[11px] text-muted-foreground/60 mt-0.5">
+              <div className="p-6 space-y-6">
+                {/* User info card */}
+                {systemInfo?.napcat.selfInfo && (
+                  <div className="flex items-center gap-4">
+                    <Avatar className="w-12 h-12 rounded-full">
+                      <AvatarImage src={`http://q.qlogo.cn/g?b=qq&nk=${systemInfo.napcat.selfInfo.uin}&s=100`} className="rounded-full" />
+                      <AvatarFallback className="rounded-full text-sm">{systemInfo.napcat.selfInfo.nick?.[0] || 'Q'}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h2 className="text-lg font-semibold text-foreground">{systemInfo.napcat.selfInfo.nick}</h2>
+                      <div className="flex items-center gap-2 mt-0.5 text-sm text-muted-foreground">
+                        <span>QQ {systemInfo.napcat.selfInfo.uin}</span>
+                        <span className="text-muted-foreground/30">·</span>
+                        {systemInfo?.napcat.workingEnv && (
+                          <>
+                            <span>{systemInfo.napcat.workingEnv === 'framework' ? 'Framework' : systemInfo.napcat.workingEnv === 'shell' ? 'Shell' : '未知'}</span>
+                            <span className="text-muted-foreground/30">·</span>
+                          </>
+                        )}
+                        <span>{wsConnected ? "已连接" : "未连接"}</span>
+                        <span className="text-muted-foreground/30">·</span>
+                        <span>{systemInfo?.napcat.online ? "QQ在线" : "QQ离线"}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Stats row */}
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] p-4">
+                    <div className="text-sm text-muted-foreground">导出任务</div>
+                    <div className="text-2xl font-semibold tracking-tight mt-1">{getTaskStats().total}</div>
+                    <div className="text-xs text-muted-foreground/60 mt-1">
                       进行中 {getTaskStats().running} · 完成 {getTaskStats().completed}
                     </div>
                   </div>
-                  <div className="flex-1 border-r border-black/[0.04] dark:border-white/[0.06] px-4 py-3">
-                    <div className="text-[12px] text-muted-foreground">群组</div>
-                    <div className="text-[20px] font-semibold tracking-tight mt-0.5">{groups.length}</div>
+                  <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] p-4">
+                    <div className="text-sm text-muted-foreground">群组</div>
+                    <div className="text-2xl font-semibold tracking-tight mt-1">{groups.length}</div>
                   </div>
-                  <div className="flex-1 px-4 py-3">
-                    <div className="text-[12px] text-muted-foreground">好友</div>
-                    <div className="text-[20px] font-semibold tracking-tight mt-0.5">{friends.length}</div>
+                  <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] p-4">
+                    <div className="text-sm text-muted-foreground">好友</div>
+                    <div className="text-2xl font-semibold tracking-tight mt-1">{friends.length}</div>
                   </div>
                 </div>
 
-                {/* Status row */}
-                <div className="flex items-center gap-3 px-1 text-[12px] text-muted-foreground/60">
-                  {systemInfo?.napcat.selfInfo && (
-                    <>
-                      <span className="text-foreground font-medium">{systemInfo.napcat.selfInfo.nick}</span>
-                      <span>QQ {systemInfo.napcat.selfInfo.uin}</span>
-                      <span className="text-muted-foreground/30">·</span>
-                    </>
-                  )}
-                  {systemInfo?.napcat.workingEnv && (
-                    <>
-                      <span>{systemInfo.napcat.workingEnv === 'framework' ? 'Framework' : systemInfo.napcat.workingEnv === 'shell' ? 'Shell' : '未知'}</span>
-                      <span className="text-muted-foreground/30">·</span>
-                    </>
-                  )}
-                  <span>{wsConnected ? "已连接" : "未连接"}</span>
-                  <span className="text-muted-foreground/30">·</span>
-                  <span>{systemInfo?.napcat.online ? "QQ在线" : "QQ离线"}</span>
-                  <span className="text-muted-foreground/30">·</span>
-                  <span className="font-mono text-[11px]">v5.0.0</span>
+                {/* Quick actions */}
+                <div className="flex items-center gap-3">
+                  <Button onClick={() => handleOpenTaskWizard()} className="rounded-lg">
+                    新建任务
+                  </Button>
+                  <Button variant="outline" onClick={() => setActiveTab("sessions")} className="rounded-lg">
+                    浏览会话
+                  </Button>
+                  <Button variant="outline" onClick={() => setActiveTab("tasks")} className="rounded-lg">
+                    查看任务
+                  </Button>
                 </div>
 
-                {/* Recent tasks - flat list */}
+                {/* Recent tasks */}
                 {tasks.length > 0 && (
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between px-1 mb-2">
-                      <h3 className="text-[13px] font-medium text-foreground">最近任务</h3>
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-sm font-medium text-foreground">最近任务</h3>
                       <button
                         onClick={() => setActiveTab("tasks")}
-                        className="text-[12px] text-muted-foreground/60 hover:text-muted-foreground transition-colors"
+                        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                       >
-                        查看全部
+                        查看全部 →
                       </button>
                     </div>
-                    {tasks.slice(0, 5).map((task) => (
-                      <div
-                        key={task.id}
-                        className="flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors"
-                      >
-                        <div className="min-w-0 flex-1 flex items-center gap-3">
-                          <span className="text-[13px] font-medium text-foreground truncate">{task.sessionName}</span>
-                          <Badge
-                            variant="outline"
-                            className={`text-[10px] px-1.5 py-0 h-[18px] rounded ${
-                              task.status === "completed"
-                                ? "text-green-700 border-green-200 bg-green-50 dark:text-green-300 dark:border-green-900 dark:bg-green-950/40"
-                                : task.status === "running"
-                                ? "text-blue-700 border-blue-200 bg-blue-50 dark:text-blue-300 dark:border-blue-900 dark:bg-blue-950/40"
-                                : task.status === "failed"
-                                ? "text-red-700 border-red-200 bg-red-50 dark:text-red-300 dark:border-red-900 dark:bg-red-950/40"
-                                : ""
-                            }`}
-                          >
-                            {getStatusText(task.status)}
-                          </Badge>
-                          <span className="text-[11px] text-muted-foreground/50">{task.format}</span>
-                          <span className="text-[11px] text-muted-foreground/50">{new Date(task.createdAt).toLocaleDateString()}</span>
-                          {task.messageCount !== undefined && task.messageCount > 0 && (
-                            <span className="text-[11px] text-muted-foreground/50">{task.messageCount.toLocaleString()} 条</span>
-                          )}
+                    <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] divide-y divide-black/[0.04] dark:divide-white/[0.04] overflow-hidden">
+                      {tasks.slice(0, 5).map((task) => (
+                        <div
+                          key={task.id}
+                          className="flex items-center justify-between px-4 py-3 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
+                        >
+                          <div className="min-w-0 flex-1 flex items-center gap-3">
+                            <span className="text-sm font-medium text-foreground truncate">{task.sessionName}</span>
+                            <Badge
+                              variant="outline"
+                              className={`text-[11px] px-1.5 py-0 rounded ${
+                                task.status === "completed"
+                                  ? "text-green-700 border-green-200 bg-green-50 dark:text-green-300 dark:border-green-900 dark:bg-green-950/40"
+                                  : task.status === "running"
+                                  ? "text-blue-700 border-blue-200 bg-blue-50 dark:text-blue-300 dark:border-blue-900 dark:bg-blue-950/40"
+                                  : task.status === "failed"
+                                  ? "text-red-700 border-red-200 bg-red-50 dark:text-red-300 dark:border-red-900 dark:bg-red-950/40"
+                                  : ""
+                              }`}
+                            >
+                              {getStatusText(task.status)}
+                            </Badge>
+                            <span className="text-xs text-muted-foreground">{task.format}</span>
+                            <span className="text-xs text-muted-foreground">{new Date(task.createdAt).toLocaleDateString()}</span>
+                            {task.messageCount !== undefined && task.messageCount > 0 && (
+                              <span className="text-xs text-muted-foreground">{task.messageCount.toLocaleString()} 条</span>
+                            )}
+                          </div>
+                          <div className="ml-4 flex items-center gap-2 flex-shrink-0">
+                            {task.status === "running" && (
+                              <>
+                                <Progress value={task.progress} shimmer={true} className="w-20 h-1.5 rounded-full" />
+                                <span className="text-xs text-muted-foreground font-medium tabular-nums">{task.progress}%</span>
+                              </>
+                            )}
+                            {task.status === "completed" && (
+                              <>
+                                <Button size="sm" variant="ghost" className="h-8 rounded-lg px-2" onClick={() => openFileLocation(task.filePath)} title="打开文件位置">
+                                  <FolderOpen className="w-4 h-4" />
+                                </Button>
+                                <Button size="sm" variant="ghost" className="h-8 rounded-lg px-2" onClick={() => downloadTask(task)} title={isJsonlExport(task) ? "打开文件夹" : "下载"}>
+                                  {isJsonlExport(task) ? <FolderOpen className="w-4 h-4" /> : <Download className="w-4 h-4" />}
+                                </Button>
+                              </>
+                            )}
+                          </div>
                         </div>
-                        <div className="ml-3 flex items-center gap-1.5 flex-shrink-0">
-                          {task.status === "running" && (
-                            <>
-                              <Progress
-                                value={task.progress}
-                                shimmer={true}
-                                className="w-16 h-1 rounded-full"
-                              />
-                              <span className="text-[11px] text-muted-foreground/60 font-medium min-w-[2rem] text-right tabular-nums">
-                                {task.progress}%
-                              </span>
-                            </>
-                          )}
-                          {task.status === "completed" && (
-                            <>
-                              <button
-                                className="p-1 rounded-md text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
-                                onClick={() => openFileLocation(task.filePath)}
-                                title="打开文件位置"
-                              >
-                                <FolderOpen className="w-3.5 h-3.5" />
-                              </button>
-                              <button
-                                className="p-1 rounded-md text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
-                                onClick={() => downloadTask(task)}
-                                title={isJsonlExport(task) ? "打开文件夹" : "下载"}
-                              >
-                                {isJsonlExport(task) ? <FolderOpen className="w-3.5 h-3.5" /> : <Download className="w-3.5 h-3.5" />}
-                              </button>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -1479,25 +1484,25 @@ export default function QCEDashboard() {
 
             {/* ==================== TASKS ==================== */}
             {activeTab === "tasks" && (
-              <div className="p-5 space-y-1">
+              <div className="p-6 space-y-1">
                 {tasks.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-20 text-center">
                     <Zap className="w-8 h-8 text-muted-foreground/20 mb-3" />
-                    <p className="text-[13px] text-foreground font-medium">暂无导出任务</p>
-                    <p className="text-[12px] text-muted-foreground/60 mt-1">从「会话」中选择一个会话来创建任务</p>
+                    <p className="text-sm text-foreground font-medium">暂无导出任务</p>
+                    <p className="text-xs text-muted-foreground/60 mt-1">从「会话」中选择一个会话来创建任务</p>
                   </div>
                 ) : (
                   tasks.map((task) => (
                     <div
                       key={task.id}
-                      className="flex items-center justify-between px-3 py-2.5 text-[13px] rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors group"
+                      className="flex items-center justify-between px-4 py-3.5 text-sm rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors group"
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-foreground truncate">{task.sessionName}</span>
                           <Badge
                             variant="outline"
-                            className={`text-[10px] px-1.5 py-0 h-[18px] rounded ${
+                            className={`text-[11px] px-1.5 py-0 rounded ${
                               task.status === "completed"
                                 ? "text-green-700 border-green-200 bg-green-50 dark:text-green-300 dark:border-green-900 dark:bg-green-950/40"
                                 : task.status === "running"
@@ -1510,7 +1515,7 @@ export default function QCEDashboard() {
                             {getStatusText(task.status)}
                           </Badge>
                         </div>
-                        <div className="mt-0.5 flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground/50">
+                        <div className="mt-0.5 flex flex-wrap items-center gap-3 text-xs text-muted-foreground/50">
                           <span className="font-mono">{task.peer?.peerUid}</span>
                           <span>{task.format}</span>
                           <span>{new Date(task.createdAt).toLocaleDateString()}</span>
@@ -1537,42 +1542,50 @@ export default function QCEDashboard() {
                             <Progress
                               value={task.progress}
                               shimmer={true}
-                              className="h-1 rounded-full flex-1 max-w-[200px]"
+                              className="h-1.5 rounded-full flex-1 max-w-[240px]"
                             />
-                            <span className="text-[11px] font-medium text-muted-foreground/50 tabular-nums">{task.progress}%</span>
+                            <span className="text-xs font-medium text-muted-foreground/50 tabular-nums">{task.progress}%</span>
                           </div>
                         )}
 
                         {/* Error */}
                         {task.error && (
-                          <div className="mt-1.5 text-[11px] text-red-600 dark:text-red-400">
+                          <div className="mt-1.5 text-xs text-red-600 dark:text-red-400">
                             {task.error}
                           </div>
                         )}
                       </div>
 
-                      <div className="ml-3 flex items-center gap-1 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="ml-3 flex items-center gap-1.5 flex-shrink-0">
                         {task.status === "completed" && (
                           <>
-                            <button
-                              className="p-1 rounded-md text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-8 rounded-lg px-2.5"
                               onClick={() => openFileLocation(task.filePath)}
                               title="打开文件位置"
                             >
-                              <FolderOpen className="w-3.5 h-3.5" />
-                            </button>
-                            <button
-                              className="p-1 rounded-md text-muted-foreground/50 hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
+                              <FolderOpen className="w-4 h-4 mr-1" />
+                              打开
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-8 rounded-lg px-2.5"
                               onClick={() => downloadTask(task)}
                               title={isJsonlExport(task) ? "打开文件夹" : "下载"}
                             >
-                              {isJsonlExport(task) ? <FolderOpen className="w-3.5 h-3.5" /> : <Download className="w-3.5 h-3.5" />}
-                            </button>
+                              {isJsonlExport(task) ? <FolderOpen className="w-4 h-4 mr-1" /> : <Download className="w-4 h-4 mr-1" />}
+                              下载
+                            </Button>
                           </>
                         )}
                         {(task.status === "completed" || task.status === "failed") && (
-                          <button
-                            className="p-1 rounded-md text-muted-foreground/50 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-8 rounded-lg px-2.5 text-muted-foreground/50 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
                             onClick={async () => {
                               if (confirm("确定要删除这个任务吗？")) {
                                 const success = await deleteTask(task.id)
@@ -1583,8 +1596,9 @@ export default function QCEDashboard() {
                             }}
                             title="删除"
                           >
-                            <X className="w-3.5 h-3.5" />
-                          </button>
+                            <X className="w-4 h-4 mr-1" />
+                            删除
+                          </Button>
                         )}
                       </div>
                     </div>
@@ -1860,12 +1874,12 @@ export default function QCEDashboard() {
                             return (
                               <div
                                 key={file.fileName}
-                                className="group flex items-center px-3 py-2.5 rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors cursor-pointer"
+                                className="group flex items-center px-3 py-3 rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors cursor-pointer"
                                 onClick={() => handleOpenFilePathModal(file.filePath, file.displayName || file.sessionName || file.chatId, file.fileName, file.size)}
                               >
-                                <Avatar className="w-8 h-8 rounded-lg border border-black/[0.04] dark:border-white/[0.04] flex-shrink-0 mr-3">
-                                  <AvatarImage src={avatarUrl} />
-                                  <AvatarFallback className="rounded-lg bg-black/[0.02] dark:bg-white/[0.04] text-muted-foreground/40">
+                                <Avatar className="w-9 h-9 rounded-full border border-black/[0.04] dark:border-white/[0.04] flex-shrink-0 mr-3">
+                                  <AvatarImage src={avatarUrl} className="rounded-full" />
+                                  <AvatarFallback className="rounded-full bg-black/[0.02] dark:bg-white/[0.04] text-muted-foreground/40">
                                     {file.chatType === 'group' ? <Users className="w-4 h-4" /> : <User className="w-4 h-4" />}
                                   </AvatarFallback>
                                 </Avatar>
@@ -2272,22 +2286,22 @@ export default function QCEDashboard() {
 
             {/* ==================== ABOUT ==================== */}
             {activeTab === "about" && (
-              <div className="p-5 max-w-2xl space-y-8">
+              <div className="p-6 max-w-2xl space-y-8">
                 <div className="space-y-4">
                   <div>
-                    <div className="text-[11px] font-medium text-muted-foreground/40 uppercase tracking-wider mb-1">About</div>
+                    <div className="text-xs font-medium text-muted-foreground/40 uppercase tracking-wider mb-1.5">About</div>
                     <h1 className="text-xl font-semibold tracking-tight text-foreground">QQ 聊天记录导出工具</h1>
                   </div>
-                  <p className="text-[13px] text-muted-foreground leading-relaxed">
+                  <p className="text-sm leading-relaxed text-muted-foreground">
                     简单高效的聊天记录导出解决方案
                   </p>
                 </div>
 
                 {/* NapCat Tribute */}
-                <div className="flex items-start gap-6 py-4">
+                <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] p-5 flex items-start gap-6">
                   <div className="space-y-3 flex-1">
-                    <h2 className="text-[15px] font-medium text-foreground">致谢 NapCat</h2>
-                    <p className="text-[13px] text-muted-foreground leading-relaxed">
+                    <h2 className="text-base font-medium text-foreground">致谢 NapCat</h2>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
                       感谢 NapCat 提供了访问 QQ 客户端数据的能力，让我们能够读取和导出聊天记录。
                     </p>
                   </div>
@@ -2301,28 +2315,26 @@ export default function QCEDashboard() {
                 {/* Actions */}
                 <div className="flex items-center gap-3">
                   <Button 
-                    size="sm"
                     onClick={() => window.open('https://github.com/shuakami/qq-chat-exporter', '_blank')}
-                    className="h-8 text-[13px] rounded-md"
+                    className="rounded-lg"
                   >
-                    <Star className="w-3.5 h-3.5 mr-1.5" />
+                    <Star className="w-4 h-4 mr-1.5" />
                     Star on GitHub
                   </Button>
                   <Button 
-                    size="sm"
                     onClick={() => window.open('https://napneko.github.io/', '_blank')}
                     variant="outline"
-                    className="h-8 text-[13px] rounded-md border-black/[0.08] dark:border-white/[0.08]"
+                    className="rounded-lg"
                   >
-                    <ExternalLink className="w-3.5 h-3.5 mr-1.5" />
+                    <ExternalLink className="w-4 h-4 mr-1.5" />
                     了解 NapCat
                   </Button>
                 </div>
 
                 {/* Legal */}
-                <div className="space-y-3 pt-4 border-t border-black/[0.04] dark:border-white/[0.04]">
-                  <h3 className="text-[14px] font-medium text-foreground">使用声明</h3>
-                  <div className="space-y-2 text-[13px] text-muted-foreground leading-relaxed">
+                <div className="space-y-3 pt-5 border-t border-black/[0.06] dark:border-white/[0.06]">
+                  <h3 className="text-base font-medium text-foreground">使用声明</h3>
+                  <div className="space-y-2.5 text-sm leading-relaxed text-muted-foreground">
                     <p>
                       本工具仅供学习和个人使用，请勿用于商业用途。请遵守相关法律法规和平台服务条款。
                     </p>
