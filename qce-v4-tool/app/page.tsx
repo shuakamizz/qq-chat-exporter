@@ -1136,16 +1136,12 @@ export default function QCEDashboard() {
               {sidebarOpen ? <PanelLeftClose className="w-4 h-4" /> : <PanelLeftOpen className="w-4 h-4" />}
             </button>
             <span className="font-medium text-muted-foreground">QCE</span>
-            <span className="text-neutral-300 dark:text-neutral-600">/</span>
+            <span className="text-muted-foreground/30">/</span>
             <span className="font-semibold text-foreground">{pageTitles[activeTab] || activeTab}</span>
           </div>
           <div className="flex items-center gap-2">
             {/* Page-specific actions */}
-            {activeTab === "overview" && (
-              <Button size="sm" className="h-8 text-[13px] rounded-md px-2.5" onClick={() => handleOpenTaskWizard()}>
-                新建任务
-              </Button>
-            )}
+
             {activeTab === "sessions" && (
               <>
                 <Button size="sm" variant="ghost" className="h-8 text-[13px] rounded-md px-2" onClick={loadChatData} disabled={isLoading}>
@@ -1375,13 +1371,13 @@ export default function QCEDashboard() {
 
                 {/* Quick actions */}
                 <div className="flex items-center gap-3">
-                  <Button onClick={() => handleOpenTaskWizard()} className="rounded-lg">
+                  <Button onClick={() => handleOpenTaskWizard()} className="rounded-full">
                     新建任务
                   </Button>
-                  <Button variant="outline" onClick={() => setActiveTab("sessions")} className="rounded-lg">
+                  <Button variant="outline" onClick={() => setActiveTab("sessions")} className="rounded-full">
                     浏览会话
                   </Button>
-                  <Button variant="outline" onClick={() => setActiveTab("tasks")} className="rounded-lg">
+                  <Button variant="outline" onClick={() => setActiveTab("tasks")} className="rounded-full">
                     查看任务
                   </Button>
                 </div>
@@ -1395,7 +1391,7 @@ export default function QCEDashboard() {
                         onClick={() => setActiveTab("tasks")}
                         className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                       >
-                        查看全部 →
+                        查看全部
                       </button>
                     </div>
                     <div className="rounded-xl border border-black/[0.06] dark:border-white/[0.06] divide-y divide-black/[0.04] dark:divide-white/[0.04] overflow-hidden">
@@ -1408,7 +1404,7 @@ export default function QCEDashboard() {
                             <span className="text-sm font-medium text-foreground truncate">{task.sessionName}</span>
                             <Badge
                               variant="outline"
-                              className={`text-[11px] px-1.5 py-0 rounded ${
+                              className={`text-[11px] px-1.5 py-0 rounded-full ${
                                 task.status === "completed"
                                   ? "text-green-700 border-green-200 bg-green-50 dark:text-green-300 dark:border-green-900 dark:bg-green-950/40"
                                   : task.status === "running"
@@ -1502,7 +1498,7 @@ export default function QCEDashboard() {
                           <span className="font-medium text-foreground truncate">{task.sessionName}</span>
                           <Badge
                             variant="outline"
-                            className={`text-[11px] px-1.5 py-0 rounded ${
+                            className={`text-[11px] px-1.5 py-0 rounded-full ${
                               task.status === "completed"
                                 ? "text-green-700 border-green-200 bg-green-50 dark:text-green-300 dark:border-green-900 dark:bg-green-950/40"
                                 : task.status === "running"
@@ -1562,7 +1558,7 @@ export default function QCEDashboard() {
                             <Button
                               size="sm"
                               variant="ghost"
-                              className="h-8 rounded-lg px-2.5"
+                              className="h-8 rounded-full px-2.5"
                               onClick={() => openFileLocation(task.filePath)}
                               title="打开文件位置"
                             >
@@ -1572,7 +1568,7 @@ export default function QCEDashboard() {
                             <Button
                               size="sm"
                               variant="ghost"
-                              className="h-8 rounded-lg px-2.5"
+                              className="h-8 rounded-full px-2.5"
                               onClick={() => downloadTask(task)}
                               title={isJsonlExport(task) ? "打开文件夹" : "下载"}
                             >
@@ -1585,13 +1581,11 @@ export default function QCEDashboard() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-8 rounded-lg px-2.5 text-muted-foreground/50 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                            className="h-8 rounded-full px-2.5 text-muted-foreground/50 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
                             onClick={async () => {
-                              if (confirm("确定要删除这个任务吗？")) {
-                                const success = await deleteTask(task.id)
-                                if (success) {
-                                  tasksLoadedRef.current = false
-                                }
+                              const success = await deleteTask(task.id)
+                              if (success) {
+                                tasksLoadedRef.current = false
                               }
                             }}
                             title="删除"
@@ -1654,7 +1648,7 @@ export default function QCEDashboard() {
                       >
                         <div className="flex items-center gap-3 min-w-0 flex-1">
                           <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                            scheduledExport.enabled ? 'bg-green-500' : 'bg-neutral-300 dark:bg-neutral-600'
+                            scheduledExport.enabled ? 'bg-blue-500' : 'bg-neutral-300 dark:bg-neutral-600'
                           }`} />
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2">
@@ -1721,10 +1715,8 @@ export default function QCEDashboard() {
                           <button
                             className="p-1 text-muted-foreground/30 hover:text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
                             onClick={async () => {
-                              if (confirm(`确定要删除定时任务"${scheduledExport.name}"吗？`)) {
-                                const success = await deleteScheduledExport(scheduledExport.id)
-                                if (success) await loadScheduledExports()
-                              }
+                              const success = await deleteScheduledExport(scheduledExport.id)
+                              if (success) await loadScheduledExports()
                             }}
                           >
                             <X className="w-3.5 h-3.5" />
@@ -1904,10 +1896,8 @@ export default function QCEDashboard() {
                                   className="p-1 ml-1 rounded-md text-muted-foreground/20 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 transition-all"
                                   onClick={async (e) => {
                                     e.stopPropagation();
-                                    if (confirm(`确定要删除这条记录吗？`)) {
-                                      const success = await deleteChatHistoryFile(file.fileName);
-                                      if (success) chatHistoryLoadedRef.current = false;
-                                    }
+                                    const success = await deleteChatHistoryFile(file.fileName);
+                                    if (success) chatHistoryLoadedRef.current = false;
                                   }}
                                 >
                                   <X className="w-3.5 h-3.5" />
@@ -2316,7 +2306,7 @@ export default function QCEDashboard() {
                 <div className="flex items-center gap-3">
                   <Button 
                     onClick={() => window.open('https://github.com/shuakami/qq-chat-exporter', '_blank')}
-                    className="rounded-lg"
+                    className="rounded-full"
                   >
                     <Star className="w-4 h-4 mr-1.5" />
                     Star on GitHub
@@ -2324,7 +2314,7 @@ export default function QCEDashboard() {
                   <Button 
                     onClick={() => window.open('https://napneko.github.io/', '_blank')}
                     variant="outline"
-                    className="rounded-lg"
+                    className="rounded-full"
                   >
                     <ExternalLink className="w-4 h-4 mr-1.5" />
                     了解 NapCat

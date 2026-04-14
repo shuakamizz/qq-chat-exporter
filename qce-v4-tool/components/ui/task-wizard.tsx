@@ -420,7 +420,7 @@ export function TaskWizard({
 
         {/* 手动输入QQ号面板（Issue #226） */}
         {manualInputMode ? (
-          <div className="space-y-3 p-4 border border-blue-200 dark:border-blue-800 rounded-2xl bg-blue-50/50 dark:bg-blue-950/30">
+          <div className="space-y-3 p-4 border border-black/[0.08] dark:border-white/[0.08] rounded-2xl bg-muted/50">
             <div className="space-y-2">
               <Label htmlFor="manualQQ" className="text-sm">QQ号码</Label>
               <Input
@@ -450,7 +450,7 @@ export function TaskWizard({
               <CheckCircle className="w-4 h-4 mr-2" />
               确认
             </Button>
-            <p className="text-xs text-blue-600 dark:text-blue-400">
+            <p className="text-xs text-muted-foreground">
               适用于好友列表中未显示的用户，如超过1000人限制的好友
             </p>
           </div>
@@ -1006,9 +1006,9 @@ export function TaskWizard({
                 className={[
                   "relative cursor-pointer rounded-2xl border p-4 transition-all",
                   (opt as any).highlight && opt.checked 
-                    ? "border-orange-400 dark:border-orange-600 bg-orange-50/50 dark:bg-orange-950/30 ring-1 ring-orange-200 dark:ring-orange-800" 
+                    ? "border-blue-400 dark:border-blue-600 bg-blue-50/50 dark:bg-blue-950/30 ring-1 ring-blue-200 dark:ring-blue-800" 
                     : (opt as any).highlight 
-                      ? "border-orange-200 dark:border-orange-800 bg-orange-50/30 dark:bg-orange-950/20 hover:border-orange-300 dark:hover:border-orange-700"
+                      ? "border-black/[0.08] dark:border-white/[0.08] bg-muted/30 hover:border-blue-300 dark:hover:border-blue-700"
                       : opt.checked 
                         ? "border-foreground/20 bg-muted" 
                         : "border-black/[0.06] dark:border-white/[0.06] hover:border-black/[0.12] dark:hover:border-white/[0.12]"
@@ -1020,8 +1020,8 @@ export function TaskWizard({
                     <div className={[
                       "w-5 h-5 rounded-lg border-2 flex items-center justify-center transition-all",
                       opt.checked 
-                        ? (opt as any).highlight ? "border-orange-500 bg-orange-500" : "border-foreground bg-foreground"
-                        : (opt as any).highlight ? "border-orange-300 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-500" : "border-muted-foreground/40 hover:border-muted-foreground/60"
+                        ? (opt as any).highlight ? "border-blue-500 bg-blue-500" : "border-foreground bg-foreground"
+                        : (opt as any).highlight ? "border-muted-foreground/40 hover:border-muted-foreground/60" : "border-muted-foreground/40 hover:border-muted-foreground/60"
                     ].join(" ")}>
                       {opt.checked && (
                         <svg className={`w-3 h-3 ${(opt as any).highlight ? 'text-white' : 'text-background'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1031,8 +1031,8 @@ export function TaskWizard({
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h4 className={`font-medium text-sm ${(opt as any).highlight ? 'text-orange-700 dark:text-orange-400' : 'text-foreground'}`}>{opt.title}</h4>
-                    <p className={`text-sm mt-1 leading-relaxed ${(opt as any).highlight ? 'text-orange-600 dark:text-orange-500' : 'text-muted-foreground'}`}>{opt.desc}</p>
+                    <h4 className={`font-medium text-sm ${(opt as any).highlight ? 'text-blue-700 dark:text-blue-400' : 'text-foreground'}`}>{opt.title}</h4>
+                    <p className={`text-sm mt-1 leading-relaxed ${(opt as any).highlight ? 'text-blue-600 dark:text-blue-500' : 'text-muted-foreground'}`}>{opt.desc}</p>
                   </div>
                 </div>
               </div>
@@ -1071,7 +1071,7 @@ export function TaskWizard({
               ) : (
                 <div className="flex items-center justify-center h-full">
                   <div className="text-center">
-                    <CheckCircle className="w-12 h-12 mx-auto text-green-600 dark:text-green-500 mb-3" />
+                    <CheckCircle className="w-12 h-12 mx-auto text-blue-500 mb-3" />
                     <p className="text-sm text-muted-foreground">已选择目标，请在右侧配置导出选项</p>
                     <Button variant="outline" size="sm" onClick={handleChangeTarget} className="mt-2 rounded-full">
                       <RefreshCw className="w-3 h-3 mr-1" />
@@ -1105,7 +1105,7 @@ export function TaskWizard({
         {/* 底部 */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.06]">
           <div className="text-sm text-muted-foreground">
-            {canSubmit() ? <span className="text-green-600 dark:text-green-500">✓ 准备就绪，可以创建任务</span> : <span>请完成所有必填项</span>}
+            {canSubmit() ? <span className="text-foreground">准备就绪</span> : <span>请完成所有必填项</span>}
           </div>
           <div className="flex gap-3">
             <Button variant="outline" onClick={onClose} className="rounded-full">取消</Button>

@@ -87,7 +87,7 @@ export default function AuthPage() {
             </div>
 
             {/* Form Card */}
-            <div className="bg-card rounded-xl border border-black/[0.05] dark:border-white/[0.06] p-6 shadow-[0_2px_8px_rgba(0,0,0,0.015)]">
+            <div className="bg-card rounded-2xl border border-black/[0.05] dark:border-white/[0.06] p-6 shadow-[0_2px_8px_rgba(0,0,0,0.015)]">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-[13px] font-medium text-foreground mb-2">
@@ -102,7 +102,7 @@ export default function AuthPage() {
                       value={token}
                       onChange={(e) => setToken(e.target.value)}
                       placeholder="粘贴您的访问令牌"
-                      className="w-full pl-10 pr-12 py-3 rounded-lg border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] focus:bg-background focus:border-black/[0.12] dark:focus:border-white/[0.12] focus:outline-none transition-colors text-[14px] text-foreground placeholder:text-muted-foreground/60"
+                      className="w-full pl-10 pr-12 py-3 rounded-xl border border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.03] focus:bg-background focus:border-black/[0.12] dark:focus:border-white/[0.12] focus:outline-none transition-colors text-[14px] text-foreground placeholder:text-muted-foreground/60"
                       autoFocus
                     />
                     <button
@@ -128,7 +128,7 @@ export default function AuthPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-foreground text-background font-medium hover:bg-foreground/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-[14px]"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-full bg-foreground text-background font-medium hover:bg-foreground/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-[14px]"
                 >
                   {loading ? (
                     <div className="w-5 h-5 border-2 border-muted-foreground/30 border-t-muted-foreground rounded-full animate-spin" />
@@ -181,16 +181,16 @@ export default function AuthPage() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-card rounded-xl border border-black/[0.05] dark:border-white/[0.06] shadow-[0_2px_8px_rgba(0,0,0,0.015)] z-50 overflow-hidden"
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-card rounded-2xl border border-black/[0.05] dark:border-white/[0.06] shadow-[0_2px_8px_rgba(0,0,0,0.015)] z-50 overflow-hidden"
             >
               {/* Modal Header */}
               <div className="flex items-center justify-between px-6 py-4 border-b border-black/[0.05] dark:border-white/[0.06]">
                 <h3 className="font-medium text-[14px] text-foreground">如何获取令牌</h3>
                 <button
                   onClick={() => setShowHelp(false)}
-                  className="p-1 text-muted-foreground hover:text-foreground transition-colors"
+                  className="p-1.5 rounded-full text-muted-foreground/50 hover:text-muted-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-colors"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
@@ -223,7 +223,7 @@ export default function AuthPage() {
               <div className="px-6 py-4 border-t border-black/[0.05] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02]">
                 <button
                   onClick={() => setShowHelp(false)}
-                  className="w-full py-2.5 text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  className="w-full py-2.5 rounded-full text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
                 >
                   知道了
                 </button>

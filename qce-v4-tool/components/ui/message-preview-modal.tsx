@@ -20,7 +20,6 @@ import {
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { useStreamSearch, type SearchProgress } from "@/lib/useStreamSearch"
-import { motion, AnimatePresence } from "framer-motion"
 
 interface MessagePreviewModalProps {
   open: boolean
@@ -231,238 +230,231 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
 
   if (!chat) return null
 
+  if (!open) return null
+
   return (
-    <AnimatePresence>
-      {open && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/25 dark:bg-black/50 z-[110]"
-            style={{backdropFilter:'blur(4px)',WebkitBackdropFilter:'blur(4px)'}}
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-background/80 z-[110] transition-opacity duration-200"
+        onClick={onClose}
+      />
+
+      {/* Fullscreen modal */}
+      <div
+        className="fixed inset-4 z-[111] flex flex-col bg-card rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.4)] overflow-hidden transition-opacity duration-200"
+      >
+        {/* Header */}
+        <div className="px-6 py-4 flex items-center justify-between flex-shrink-0 border-b border-black/[0.06] dark:border-white/[0.06]">
+          <div className="flex items-center gap-3">
+            <Avatar className="w-10 h-10 rounded-full">
+              <AvatarImage src={chat.type === 'group' 
+                ? `https://p.qlogo.cn/gh/${chat.id}/${chat.id}/40`
+                : `https://q1.qlogo.cn/g?b=qq&nk=${chat.id}&s=40`
+              } />
+              <AvatarFallback className="bg-muted text-muted-foreground rounded-full">
+                {chat.type === 'group' ? <Users className="w-4 h-4" /> : <User className="w-4 h-4" />}
+              </AvatarFallback>
+            </Avatar>
+            <div>
+              <h2 className="text-base font-semibold text-foreground leading-tight">{chat.name}</h2>
+              <p className="text-xs text-muted-foreground">
+                {chat.type === 'group' ? '群聊' : '好友'} · {totalCount.toLocaleString()} 条消息
+              </p>
+            </div>
+          </div>
+          <button
             onClick={onClose}
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl max-h-[85vh] bg-card rounded-xl border border-black/[0.06] dark:border-white/[0.06] shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-[111] flex flex-col overflow-hidden"
+            className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-full transition-colors"
           >
-            {/* Header */}
-            <div className="px-6 py-5 border-b border-black/[0.06] dark:border-white/[0.06]">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Avatar className="w-12 h-12 rounded-full">
-                    <AvatarImage src={chat.type === 'group' 
-                      ? `https://p.qlogo.cn/gh/${chat.id}/${chat.id}/40`
-                      : `https://q1.qlogo.cn/g?b=qq&nk=${chat.id}&s=40`
-                    } />
-                    <AvatarFallback className="bg-muted text-muted-foreground">
-                      {chat.type === 'group' ? <Users className="w-5 h-5" /> : <User className="w-5 h-5" />}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h2 className="text-lg font-semibold text-foreground">{chat.name}</h2>
-                    <p className="text-sm text-muted-foreground">
-                      {chat.type === 'group' ? '群聊' : '好友'} · {totalCount.toLocaleString()} 条消息
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={onClose}
-                  className="p-2 text-muted-foreground hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg transition-colors"
-                >
-                  <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Filters - single compact row */}
+        <div className="px-6 py-3 flex items-center gap-3 flex-shrink-0 border-b border-black/[0.06] dark:border-white/[0.06] flex-wrap">
+          {/* Time range */}
+          <div className="flex items-center gap-2">
+            <CalendarIcon className="w-3.5 h-3.5 text-muted-foreground" />
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => { setStartDate(e.target.value); validateTimeRange(e.target.value, endDate) }}
+              className="px-2.5 py-1 text-xs bg-transparent text-foreground rounded-full border border-black/[0.06] dark:border-white/[0.06] focus:outline-none focus:ring-1 focus:ring-foreground/20"
+            />
+            <span className="text-muted-foreground/40 text-xs">—</span>
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => { setEndDate(e.target.value); validateTimeRange(startDate, e.target.value) }}
+              className="px-2.5 py-1 text-xs bg-transparent text-foreground rounded-full border border-black/[0.06] dark:border-white/[0.06] focus:outline-none focus:ring-1 focus:ring-foreground/20"
+            />
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleTimeRangeChange}
+              disabled={(!startDate && !endDate) || !!timeRangeError}
+              className="rounded-full h-7 text-xs px-3"
+            >
+              筛选
+            </Button>
+            {(startDate || endDate) && (
+              <button
+                onClick={() => { setStartDate(""); setEndDate(""); setTimeRangeError(null); setCurrentFilter(null); fetchMessages(1) }}
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              >
+                清除
+              </button>
+            )}
+            {timeRangeError && <span className="text-xs text-red-500">{timeRangeError}</span>}
+          </div>
+
+          {/* Divider */}
+          <div className="w-px h-5 bg-black/[0.06] dark:bg-white/[0.06]" />
+
+          {/* Search */}
+          <div className="flex items-center gap-2 flex-1 min-w-[200px]">
+            <div className="flex-1 flex items-center gap-2 px-3 py-1.5 rounded-full border border-black/[0.06] dark:border-white/[0.06] focus-within:ring-1 focus-within:ring-foreground/20">
+              <Search className="w-3.5 h-3.5 text-muted-foreground/60" />
+              <input
+                type="text"
+                placeholder="搜索消息内容..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                className="flex-1 text-xs bg-transparent outline-none text-foreground placeholder:text-muted-foreground/60"
+              />
+              {searchQuery && (
+                <button onClick={() => { setSearchQuery(""); setUseStreamMode(false); setSearchProgress(""); fetchMessages(1) }}>
+                  <X className="w-3.5 h-3.5 text-muted-foreground hover:text-foreground" />
                 </button>
-              </div>
-            </div>
-
-            {/* Filters */}
-            <div className="px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.06] space-y-3">
-              {/* Time Range */}
-              <div className="flex items-center gap-3 flex-wrap">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <CalendarIcon className="w-4 h-4" />
-                  <span>时间:</span>
-                </div>
-                <input
-                  type="date"
-                  value={startDate}
-                  onChange={(e) => { setStartDate(e.target.value); validateTimeRange(e.target.value, endDate) }}
-                  className="px-3 py-1.5 text-sm border border-black/[0.06] dark:border-white/[0.06] rounded-lg bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                />
-                <span className="text-muted-foreground/40">—</span>
-                <input
-                  type="date"
-                  value={endDate}
-                  onChange={(e) => { setEndDate(e.target.value); validateTimeRange(startDate, e.target.value) }}
-                  className="px-3 py-1.5 text-sm border border-black/[0.06] dark:border-white/[0.06] rounded-lg bg-transparent text-foreground focus:outline-none focus:ring-1 focus:ring-foreground/20"
-                />
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={handleTimeRangeChange}
-                  disabled={(!startDate && !endDate) || !!timeRangeError}
-                  className="rounded-lg"
-                >
-                  筛选
-                </Button>
-                {(startDate || endDate) && (
-                  <button
-                    onClick={() => { setStartDate(""); setEndDate(""); setTimeRangeError(null); setCurrentFilter(null); fetchMessages(1) }}
-                    className="text-sm text-muted-foreground hover:text-foreground"
-                  >
-                    清除
-                  </button>
-                )}
-                {timeRangeError && <span className="text-xs text-red-500">{timeRangeError}</span>}
-              </div>
-
-              {/* Search */}
-              <div className="flex items-center gap-3">
-                <div className="flex-1 flex items-center gap-2 px-3 py-2 bg-transparent border border-black/[0.06] dark:border-white/[0.06] rounded-lg focus-within:ring-1 focus-within:ring-foreground/20">
-                  <Search className="w-4 h-4 text-muted-foreground/60" />
-                  <input
-                    type="text"
-                    placeholder="搜索消息内容..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                    className="flex-1 text-sm bg-transparent outline-none text-foreground placeholder:text-muted-foreground/60"
-                  />
-                  {searchQuery && (
-                    <button onClick={() => { setSearchQuery(""); setUseStreamMode(false); setSearchProgress(""); fetchMessages(1) }}>
-                      <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
-                    </button>
-                  )}
-                </div>
-                <Button size="sm" onClick={handleSearch} disabled={loading || !searchQuery.trim()} className="rounded-lg">
-                  {streamSearch.searching ? <Loader2 className="w-4 h-4 animate-spin" /> : '搜索'}
-                </Button>
-                {streamSearch.searching && (
-                  <Button size="sm" variant="ghost" onClick={() => streamSearch.cancelSearch()}>取消</Button>
-                )}
-                {searchProgress && <Badge variant="secondary" className="text-xs">{searchProgress}</Badge>}
-              </div>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 min-h-0 overflow-y-auto">
-              <div className="p-6">
-                {loading && (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <RefreshCw className="w-8 h-8 text-muted-foreground/40 animate-spin mb-3" />
-                    <p className="text-sm text-muted-foreground">加载中...</p>
-                  </div>
-                )}
-
-                {error && (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <p className="text-sm text-red-500 dark:text-red-400 mb-3">{error}</p>
-                    <Button variant="outline" size="sm" onClick={() => fetchMessages(1)}>重试</Button>
-                  </div>
-                )}
-
-                {!loading && !error && messages.length === 0 && (
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <MessageSquare className="w-12 h-12 text-muted-foreground/30 mb-3" />
-                    <p className="text-muted-foreground">{searchQuery ? '没有找到匹配的消息' : '暂无消息'}</p>
-                  </div>
-                )}
-
-                {!loading && !error && messages.length > 0 && (
-                  <div className="space-y-2">
-                    {messages.map((msg, idx) => {
-                      const isFromSelf = msg.sendType === 1
-                      return (
-                        <div
-                          key={`${msg.msgId}-${idx}`}
-                          className={cn(
-                            "flex gap-3 p-3 rounded-xl transition-colors",
-                            isFromSelf ? "bg-blue-50/50 dark:bg-blue-900/20 ml-8" : "bg-black/[0.02] dark:bg-white/[0.03] mr-8"
-                          )}
-                        >
-                          <Avatar className="w-9 h-9 flex-shrink-0 rounded-full">
-                            <AvatarImage src={`https://q1.qlogo.cn/g?b=qq&nk=${msg.senderUin}&s=40`} />
-                            <AvatarFallback className="text-xs bg-muted text-muted-foreground">
-                              {(msg.sendMemberName || msg.sendNickName || '?')[0]}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-sm font-medium text-foreground truncate">
-                                {msg.sendMemberName || msg.sendNickName || `用户${msg.senderUin}`}
-                              </span>
-                              <span className="text-xs text-muted-foreground/60">
-                                {format(new Date(msg.msgTime * 1000), 'MM-dd HH:mm')}
-                              </span>
-                            </div>
-                            <p className="text-sm text-foreground break-words leading-relaxed">
-                              {formatMessageContent(msg.elements)}
-                            </p>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.06] bg-card flex items-center justify-between">
-              {/* Pagination */}
-              {!useStreamMode && totalPages > 1 ? (
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => { setCurrentPage(p => p - 1); fetchMessages(currentPage - 1) }}
-                    disabled={currentPage <= 1 || loading}
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </Button>
-                  <span className="text-sm text-muted-foreground">
-                    {currentPage} / {totalPages}
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => { setCurrentPage(p => p + 1); fetchMessages(currentPage + 1) }}
-                    disabled={currentPage >= totalPages || loading}
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </Button>
-                </div>
-              ) : (
-                <div />
               )}
-
-              {/* Actions */}
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => fetchMessages(currentPage)}
-                  disabled={loading}
-                  className="rounded-lg"
-                >
-                  <RefreshCw className={cn("w-4 h-4 mr-1.5", loading && "animate-spin")} />
-                  刷新
-                </Button>
-                {onExport && (
-                  <Button size="sm" onClick={handleExportWithTimeRange} className="rounded-lg">
-                    <Download className="w-4 h-4 mr-1.5" />
-                    导出
-                  </Button>
-                )}
-              </div>
             </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+            <Button size="sm" onClick={handleSearch} disabled={loading || !searchQuery.trim()} className="rounded-full h-7 text-xs px-3">
+              {streamSearch.searching ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : '搜索'}
+            </Button>
+            {streamSearch.searching && (
+              <Button size="sm" variant="ghost" onClick={() => streamSearch.cancelSearch()} className="rounded-full h-7 text-xs px-3">取消</Button>
+            )}
+            {searchProgress && <Badge variant="secondary" className="text-xs rounded-full">{searchProgress}</Badge>}
+          </div>
+        </div>
+
+        {/* Messages */}
+        <div className="flex-1 min-h-0 overflow-y-auto">
+          <div className="max-w-4xl mx-auto px-6 py-4">
+            {loading && (
+              <div className="flex flex-col items-center justify-center py-20">
+                <RefreshCw className="w-6 h-6 text-muted-foreground/40 animate-spin mb-3" />
+                <p className="text-sm text-muted-foreground">加载中...</p>
+              </div>
+            )}
+
+            {error && (
+              <div className="flex flex-col items-center justify-center py-20">
+                <p className="text-sm text-red-500 dark:text-red-400 mb-3">{error}</p>
+                <Button variant="outline" size="sm" onClick={() => fetchMessages(1)} className="rounded-full">重试</Button>
+              </div>
+            )}
+
+            {!loading && !error && messages.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-20">
+                <MessageSquare className="w-10 h-10 text-muted-foreground/20 mb-3" />
+                <p className="text-sm text-muted-foreground">{searchQuery ? '没有找到匹配的消息' : '暂无消息'}</p>
+              </div>
+            )}
+
+            {!loading && !error && messages.length > 0 && (
+              <div className="space-y-1">
+                {messages.map((msg, idx) => {
+                  const isFromSelf = msg.sendType === 1
+                  return (
+                    <div
+                      key={`${msg.msgId}-${idx}`}
+                      className={cn(
+                        "flex gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-black/[0.02] dark:hover:bg-white/[0.02]",
+                        isFromSelf && "bg-black/[0.02] dark:bg-white/[0.02]"
+                      )}
+                    >
+                      <Avatar className="w-8 h-8 flex-shrink-0 rounded-full">
+                        <AvatarImage src={`https://q1.qlogo.cn/g?b=qq&nk=${msg.senderUin}&s=40`} />
+                        <AvatarFallback className="text-xs bg-muted text-muted-foreground rounded-full">
+                          {(msg.sendMemberName || msg.sendNickName || '?')[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="text-sm font-medium text-foreground truncate">
+                            {msg.sendMemberName || msg.sendNickName || `用户${msg.senderUin}`}
+                          </span>
+                          <span className="text-xs text-muted-foreground/50">
+                            {format(new Date(msg.msgTime * 1000), 'MM-dd HH:mm')}
+                          </span>
+                        </div>
+                        <p className="text-sm text-foreground/80 break-words leading-relaxed">
+                          {formatMessageContent(msg.elements)}
+                        </p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="px-6 py-3 border-t border-black/[0.06] dark:border-white/[0.06] flex items-center justify-between flex-shrink-0">
+          {/* Pagination */}
+          {!useStreamMode && totalPages > 1 ? (
+            <div className="flex items-center gap-1.5">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => { setCurrentPage(p => p - 1); fetchMessages(currentPage - 1) }}
+                disabled={currentPage <= 1 || loading}
+                className="rounded-full h-8 w-8 p-0"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <span className="text-xs text-muted-foreground px-2">
+                {currentPage} / {totalPages}
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => { setCurrentPage(p => p + 1); fetchMessages(currentPage + 1) }}
+                disabled={currentPage >= totalPages || loading}
+                className="rounded-full h-8 w-8 p-0"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+            </div>
+          ) : (
+            <div />
+          )}
+
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => fetchMessages(currentPage)}
+              disabled={loading}
+              className="rounded-full h-8 text-xs px-4"
+            >
+              <RefreshCw className={cn("w-3.5 h-3.5 mr-1.5", loading && "animate-spin")} />
+              刷新
+            </Button>
+            {onExport && (
+              <Button size="sm" onClick={handleExportWithTimeRange} className="rounded-full h-8 text-xs px-4">
+                <Download className="w-3.5 h-3.5 mr-1.5" />
+                导出
+              </Button>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   )
 }

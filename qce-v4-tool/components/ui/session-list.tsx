@@ -153,6 +153,20 @@ export function SessionList({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [search, setSearch, batchMode, onToggleBatchMode, page, setPage, hasPrevPage, hasNextPage])
 
+  // Close dropdown menus when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const dropdowns = document.querySelectorAll('[data-session-dropdown]:not(.hidden)')
+      dropdowns.forEach((dropdown) => {
+        if (!dropdown.contains(e.target as Node) && !dropdown.previousElementSibling?.contains(e.target as Node)) {
+          dropdown.classList.add('hidden')
+        }
+      })
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
+
   const hasActiveFilters = search || type !== 'all'
 
   const renderSessionItem = useCallback((item: SessionItem) => {
@@ -221,24 +235,10 @@ export function SessionList({
         </div>
 
         {!batchMode && (
-          <div className="flex items-center gap-1 flex-shrink-0">
+          <div className="flex items-center gap-1.5 flex-shrink-0">
             <Button
               size="sm"
-              variant="outline"
-              className="h-8 px-3 text-xs rounded-lg"
-              onClick={(e: React.MouseEvent) => {
-                e.stopPropagation()
-                onPreviewChat?.(item.type, item.id, item.name, { 
-                  chatType: isGroup ? 2 : 1, 
-                  peerUid: item.id 
-                })
-              }}
-            >
-              预览
-            </Button>
-            <Button
-              size="sm"
-              className="h-8 px-3 text-xs rounded-lg"
+              className="h-7 px-3 text-xs rounded-full"
               onClick={(e: React.MouseEvent) => {
                 e.stopPropagation()
                 onOpenTaskWizard?.({
@@ -250,43 +250,68 @@ export function SessionList({
             >
               导出
             </Button>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-7 px-2 text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation()
+                onPreviewChat?.(item.type, item.id, item.name, { 
+                  chatType: isGroup ? 2 : 1, 
+                  peerUid: item.id 
+                })
+              }}
+            >
+              预览
+            </Button>
             {isGroup && group && (
-              <>
+              <div className="relative">
                 <Button
                   size="sm"
-                  variant="outline"
-                  className="h-8 px-3 text-xs rounded-lg"
-                  disabled={avatarExportLoading === group.groupCode}
+                  variant="ghost"
+                  className="h-7 w-7 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation()
-                    onExportGroupAvatars?.(group.groupCode, group.groupName)
+                    const menu = e.currentTarget.nextElementSibling as HTMLElement
+                    if (menu) menu.classList.toggle('hidden')
                   }}
                 >
-                  {avatarExportLoading === group.groupCode ? '...' : '头像'}
+                  <span className="text-xs">···</span>
                 </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="h-8 px-3 text-xs rounded-lg"
-                  onClick={(e: React.MouseEvent) => {
-                    e.stopPropagation()
-                    onOpenEssenceModal?.(group.groupCode, group.groupName)
-                  }}
-                >
-                  精华
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="h-8 px-3 text-xs rounded-lg"
-                  onClick={(e: React.MouseEvent) => {
-                    e.stopPropagation()
-                    onOpenGroupFilesModal?.(group.groupCode, group.groupName)
-                  }}
-                >
-                  文件
-                </Button>
-              </>
+                <div className="hidden absolute right-0 top-full mt-1 py-1 w-28 bg-card rounded-xl border border-black/[0.06] dark:border-white/[0.06] shadow-lg z-50" data-session-dropdown>
+                  <button
+                    className="w-full px-3 py-1.5 text-left text-xs text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onExportGroupAvatars?.(group.groupCode, group.groupName)
+                      ;(e.currentTarget.parentElement as HTMLElement)?.classList.add('hidden')
+                    }}
+                    disabled={avatarExportLoading === group.groupCode}
+                  >
+                    {avatarExportLoading === group.groupCode ? '导出中...' : '导出头像'}
+                  </button>
+                  <button
+                    className="w-full px-3 py-1.5 text-left text-xs text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onOpenEssenceModal?.(group.groupCode, group.groupName)
+                      ;(e.currentTarget.parentElement as HTMLElement)?.classList.add('hidden')
+                    }}
+                  >
+                    精华消息
+                  </button>
+                  <button
+                    className="w-full px-3 py-1.5 text-left text-xs text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onOpenGroupFilesModal?.(group.groupCode, group.groupName)
+                      ;(e.currentTarget.parentElement as HTMLElement)?.classList.add('hidden')
+                    }}
+                  >
+                    群文件
+                  </button>
+                </div>
+              </div>
             )}
           </div>
         )}
@@ -396,7 +421,7 @@ export function SessionList({
               <Button
                 variant="outline"
                 size="sm"
-                className="rounded-md h-7 text-[12px]"
+                className="rounded-full h-7 text-[12px]"
                 onClick={onSelectAll}
               >
                 全选当前
@@ -406,14 +431,14 @@ export function SessionList({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="rounded-md h-7 text-[12px]"
+                    className="rounded-full h-7 text-[12px]"
                     onClick={onClearSelection}
                   >
                     清空
                   </Button>
                   <Button
                     size="sm"
-                    className="rounded-md h-7 text-[12px]"
+                    className="rounded-full h-7 text-[12px]"
                     onClick={onOpenBatchExportDialog}
                   >
                     导出选中 ({selectedItems.size})
