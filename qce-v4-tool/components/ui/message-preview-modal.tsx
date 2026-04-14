@@ -1,9 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { Loader } from "@/components/ui/loader"
 import {
   MessageSquare,
   Calendar as CalendarIcon,
@@ -230,19 +232,27 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
 
   if (!chat) return null
 
-  if (!open) return null
-
   return (
-    <>
+    <AnimatePresence>
+      {open && (
+      <>
       {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-background/80 z-[110] transition-opacity duration-200"
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.15 }}
+        className="fixed inset-0 bg-background/80 z-[110]"
         onClick={onClose}
       />
 
       {/* Fullscreen modal */}
-      <div
-        className="fixed inset-4 z-[111] flex flex-col bg-card rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.4)] overflow-hidden transition-opacity duration-200"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.97, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.97, y: 8 }}
+        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed inset-4 z-[111] flex flex-col bg-card rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.12)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.4)] overflow-hidden"
       >
         {/* Header */}
         <div className="px-6 py-4 flex items-center justify-between flex-shrink-0 border-b border-black/[0.06] dark:border-white/[0.06]">
@@ -345,7 +355,7 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
           <div className="max-w-4xl mx-auto px-6 py-4">
             {loading && (
               <div className="flex flex-col items-center justify-center py-20">
-                <RefreshCw className="w-6 h-6 text-muted-foreground/40 animate-spin mb-3" />
+                <Loader size={20} className="text-muted-foreground/40 mb-3" />
                 <p className="text-sm text-muted-foreground">加载中...</p>
               </div>
             )}
@@ -359,7 +369,9 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
 
             {!loading && !error && messages.length === 0 && (
               <div className="flex flex-col items-center justify-center py-20">
-                <MessageSquare className="w-10 h-10 text-muted-foreground/20 mb-3" />
+                <div className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center mb-3">
+                  <MessageSquare className="w-5 h-5 text-muted-foreground/40" />
+                </div>
                 <p className="text-sm text-muted-foreground">{searchQuery ? '没有找到匹配的消息' : '暂无消息'}</p>
               </div>
             )}
@@ -454,7 +466,9 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
             )}
           </div>
         </div>
-      </div>
-    </>
+      </motion.div>
+      </>
+      )}
+    </AnimatePresence>
   )
 }

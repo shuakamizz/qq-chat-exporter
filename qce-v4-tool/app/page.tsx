@@ -1144,13 +1144,13 @@ export default function QCEDashboard() {
 
             {activeTab === "sessions" && (
               <>
-                <Button size="sm" variant="ghost" className="h-8 text-[13px] rounded-md px-2" onClick={loadChatData} disabled={isLoading}>
+                <Button size="sm" variant="ghost" className="h-8 text-[13px] rounded-full px-2" onClick={loadChatData} disabled={isLoading}>
                   <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
                 <Button
                   size="sm"
                   variant={batchMode ? "default" : "ghost"}
-                  className="h-8 text-[13px] rounded-md px-2.5"
+                  className="h-8 text-[13px] rounded-full px-2.5"
                   onClick={handleToggleBatchMode}
                 >
                   {batchMode ? "退出批量" : "批量导出"}
@@ -1163,7 +1163,7 @@ export default function QCEDashboard() {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="h-8 text-[13px] rounded-md px-2"
+                    className="h-8 text-[13px] rounded-full px-2"
                     onClick={() => setShowExportHelpMenu(!showExportHelpMenu)}
                   >
                     <HelpCircle className="w-4 h-4" />
@@ -1187,45 +1187,33 @@ export default function QCEDashboard() {
                         >
                           <div className="p-1">
                             <button
-                              className="w-full px-2.5 py-2 text-left text-[13px] rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors flex items-center gap-2.5"
+                              className="w-full px-3 py-2 text-left text-[13px] rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
                               onClick={() => { setShowExportHelpMenu(false); setShowHtmlHelp(true); }}
                             >
-                              <FileText className="w-3.5 h-3.5 text-muted-foreground/60" />
-                              <div>
-                                <div className="font-medium text-foreground">HTML 导出</div>
-                                <div className="text-[11px] text-muted-foreground/60">可视化聊天记录</div>
-                              </div>
+                              <div className="font-medium text-foreground">HTML 导出</div>
+                              <div className="text-[11px] text-muted-foreground/60">可视化聊天记录</div>
                             </button>
                             <button
-                              className="w-full px-2.5 py-2 text-left text-[13px] rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors flex items-center gap-2.5"
+                              className="w-full px-3 py-2 text-left text-[13px] rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
                               onClick={() => { setShowExportHelpMenu(false); setShowJsonHelp(true); }}
                             >
-                              <Database className="w-3.5 h-3.5 text-muted-foreground/60" />
-                              <div>
-                                <div className="font-medium text-foreground">JSON 导出</div>
-                                <div className="text-[11px] text-muted-foreground/60">结构化数据格式</div>
-                              </div>
+                              <div className="font-medium text-foreground">JSON 导出</div>
+                              <div className="text-[11px] text-muted-foreground/60">结构化数据格式</div>
                             </button>
                             <div className="my-0.5 border-t border-black/[0.04] dark:border-white/[0.04]" />
                             <button
-                              className="w-full px-2.5 py-2 text-left text-[13px] rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors flex items-center gap-2.5"
+                              className="w-full px-3 py-2 text-left text-[13px] rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
                               onClick={() => { setShowExportHelpMenu(false); setShowStreamingZipHelp(true); }}
                             >
-                              <Package className="w-3.5 h-3.5 text-muted-foreground/60" />
-                              <div>
-                                <div className="font-medium text-foreground">流式 ZIP</div>
-                                <div className="text-[11px] text-muted-foreground/60">大规模 HTML 分块打包</div>
-                              </div>
+                              <div className="font-medium text-foreground">流式 ZIP</div>
+                              <div className="text-[11px] text-muted-foreground/60">大规模 HTML 分块打包</div>
                             </button>
                             <button
-                              className="w-full px-2.5 py-2 text-left text-[13px] rounded-md hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors flex items-center gap-2.5"
+                              className="w-full px-3 py-2 text-left text-[13px] rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.04] transition-colors"
                               onClick={() => { setShowExportHelpMenu(false); setShowJsonlHelp(true); }}
                             >
-                              <Database className="w-3.5 h-3.5 text-muted-foreground/60" />
-                              <div>
-                                <div className="font-medium text-foreground">JSONL 分块</div>
-                                <div className="text-[11px] text-muted-foreground/60">大规模数据处理</div>
-                              </div>
+                              <div className="font-medium text-foreground">JSONL 分块</div>
+                              <div className="text-[11px] text-muted-foreground/60">大规模数据处理</div>
                             </button>
                           </div>
                         </motion.div>
@@ -1233,10 +1221,10 @@ export default function QCEDashboard() {
                     )}
                   </AnimatePresence>
                 </div>
-                <Button size="sm" variant="ghost" className="h-8 text-[13px] rounded-md px-2" onClick={handleLoadTasks} disabled={isLoading}>
+                <Button size="sm" variant="ghost" className="h-8 text-[13px] rounded-full px-2" onClick={handleLoadTasks} disabled={isLoading}>
                   <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
                 </Button>
-                <Button size="sm" className="h-8 text-[13px] rounded-md px-2.5" onClick={() => handleOpenTaskWizard()}>
+                <Button size="sm" className="h-8 text-[13px] rounded-full px-2.5" onClick={() => handleOpenTaskWizard()}>
                   新建任务
                 </Button>
               </>
@@ -1246,7 +1234,7 @@ export default function QCEDashboard() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 text-[13px] rounded-md px-2"
+                  className="h-8 text-[13px] rounded-full px-2"
                   onClick={handleLoadScheduledExports}
                   disabled={scheduledLoading}
                 >
@@ -1255,14 +1243,14 @@ export default function QCEDashboard() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 text-[13px] rounded-md px-2.5"
+                  className="h-8 text-[13px] rounded-full px-2.5"
                   onClick={handleOpenScheduledMergeDialog}
                   disabled={loadingScheduledTasks}
                 >
                   <Combine className="w-4 h-4 mr-1" />
                   合并
                 </Button>
-                <Button size="sm" className="h-8 text-[13px] rounded-md px-2.5" onClick={() => handleOpenScheduledExportWizard()}>
+                <Button size="sm" className="h-8 text-[13px] rounded-full px-2.5" onClick={() => handleOpenScheduledExportWizard()}>
                   新建定时任务
                 </Button>
               </>
@@ -1271,7 +1259,7 @@ export default function QCEDashboard() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="h-8 text-[13px] rounded-md px-2"
+                className="h-8 text-[13px] rounded-full px-2"
                 onClick={async () => {
                   chatHistoryLoadedRef.current = false
                   resourceIndexLoadedRef.current = false
@@ -1289,7 +1277,7 @@ export default function QCEDashboard() {
                 <Button
                   size="sm"
                   variant="ghost"
-                  className="h-8 text-[13px] rounded-md px-2"
+                  className="h-8 text-[13px] rounded-full px-2"
                   onClick={async () => {
                     stickerPacksLoadedRef.current = false
                     try {
@@ -1306,7 +1294,7 @@ export default function QCEDashboard() {
                 </Button>
                 <Button
                   size="sm"
-                  className="h-8 text-[13px] rounded-md px-2.5"
+                  className="h-8 text-[13px] rounded-full px-2.5"
                   onClick={handleExportAllStickerPacks}
                   disabled={stickerPacksLoading || stickerPacks.length === 0}
                 >
@@ -1403,14 +1391,13 @@ export default function QCEDashboard() {
                           <div className="min-w-0 flex-1 flex items-center gap-3">
                             <span className="text-sm font-medium text-foreground truncate">{task.sessionName}</span>
                             <Badge
-                              variant="outline"
-                              className={`text-[11px] px-1.5 py-0 rounded-full ${
+                              className={`text-[11px] px-1.5 py-0 rounded-full border-0 ${
                                 task.status === "completed"
-                                  ? "text-green-700 border-green-200 bg-green-50 dark:text-green-300 dark:border-green-900 dark:bg-green-950/40"
+                                  ? "text-green-700 bg-green-50 dark:text-green-300 dark:bg-green-950/40"
                                   : task.status === "running"
-                                  ? "text-blue-700 border-blue-200 bg-blue-50 dark:text-blue-300 dark:border-blue-900 dark:bg-blue-950/40"
+                                  ? "text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/40"
                                   : task.status === "failed"
-                                  ? "text-red-700 border-red-200 bg-red-50 dark:text-red-300 dark:border-red-900 dark:bg-red-950/40"
+                                  ? "text-red-700 bg-red-50 dark:text-red-300 dark:bg-red-950/40"
                                   : ""
                               }`}
                             >
@@ -1497,14 +1484,13 @@ export default function QCEDashboard() {
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-foreground truncate">{task.sessionName}</span>
                           <Badge
-                            variant="outline"
-                            className={`text-[11px] px-1.5 py-0 rounded-full ${
+                            className={`text-[11px] px-1.5 py-0 rounded-full border-0 ${
                               task.status === "completed"
-                                ? "text-green-700 border-green-200 bg-green-50 dark:text-green-300 dark:border-green-900 dark:bg-green-950/40"
+                                ? "text-green-700 bg-green-50 dark:text-green-300 dark:bg-green-950/40"
                                 : task.status === "running"
-                                ? "text-blue-700 border-blue-200 bg-blue-50 dark:text-blue-300 dark:border-blue-900 dark:bg-blue-950/40"
+                                ? "text-blue-700 bg-blue-50 dark:text-blue-300 dark:bg-blue-950/40"
                                 : task.status === "failed"
-                                ? "text-red-700 border-red-200 bg-red-50 dark:text-red-300 dark:border-red-900 dark:bg-red-950/40"
+                                ? "text-red-700 bg-red-50 dark:text-red-300 dark:bg-red-950/40"
                                 : ""
                             }`}
                           >
@@ -1558,22 +1544,20 @@ export default function QCEDashboard() {
                             <Button
                               size="sm"
                               variant="ghost"
-                              className="h-8 rounded-full px-2.5"
+                              className="h-8 w-8 rounded-full p-0"
                               onClick={() => openFileLocation(task.filePath)}
                               title="打开文件位置"
                             >
-                              <FolderOpen className="w-4 h-4 mr-1" />
-                              打开
+                              <FolderOpen className="w-4 h-4" />
                             </Button>
                             <Button
                               size="sm"
                               variant="ghost"
-                              className="h-8 rounded-full px-2.5"
+                              className="h-8 w-8 rounded-full p-0"
                               onClick={() => downloadTask(task)}
                               title={isJsonlExport(task) ? "打开文件夹" : "下载"}
                             >
-                              {isJsonlExport(task) ? <FolderOpen className="w-4 h-4 mr-1" /> : <Download className="w-4 h-4 mr-1" />}
-                              下载
+                              {isJsonlExport(task) ? <FolderOpen className="w-4 h-4" /> : <Download className="w-4 h-4" />}
                             </Button>
                           </>
                         )}
@@ -1581,17 +1565,27 @@ export default function QCEDashboard() {
                           <Button
                             size="sm"
                             variant="ghost"
-                            className="h-8 rounded-full px-2.5 text-muted-foreground/50 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
-                            onClick={async () => {
-                              const success = await deleteTask(task.id)
-                              if (success) {
-                                tasksLoadedRef.current = false
-                              }
+                            className="h-8 w-8 rounded-full p-0 text-muted-foreground/50 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                            onClick={() => {
+                              toast.error(`删除任务「${task.sessionName}」？`, {
+                                description: "此操作不可撤销",
+                                actions: [
+                                  {
+                                    label: "确认删除",
+                                    onClick: async () => {
+                                      const success = await deleteTask(task.id)
+                                      if (success) {
+                                        tasksLoadedRef.current = false
+                                      }
+                                    },
+                                    variant: "destructive"
+                                  }
+                                ]
+                              })
                             }}
                             title="删除"
                           >
-                            <X className="w-4 h-4 mr-1" />
-                            删除
+                            <X className="w-4 h-4" />
                           </Button>
                         )}
                       </div>
@@ -1657,7 +1651,7 @@ export default function QCEDashboard() {
                               </span>
                               <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${
                                 scheduledExport.enabled 
-                                  ? 'bg-green-50 text-green-700 dark:bg-green-950/40 dark:text-green-300' 
+                                  ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300' 
                                   : 'bg-black/[0.04] dark:bg-white/[0.04] text-muted-foreground/50'
                               }`}>
                                 {scheduledExport.enabled ? "启用" : "禁用"}
@@ -1714,9 +1708,20 @@ export default function QCEDashboard() {
                           </button>
                           <button
                             className="p-1 text-muted-foreground/30 hover:text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-                            onClick={async () => {
-                              const success = await deleteScheduledExport(scheduledExport.id)
-                              if (success) await loadScheduledExports()
+                            onClick={() => {
+                              toast.error(`删除定时任务「${scheduledExport.name}」？`, {
+                                description: "此操作不可撤销",
+                                actions: [
+                                  {
+                                    label: "确认删除",
+                                    onClick: async () => {
+                                      const success = await deleteScheduledExport(scheduledExport.id)
+                                      if (success) await loadScheduledExports()
+                                    },
+                                    variant: "destructive"
+                                  }
+                                ]
+                              })
                             }}
                           >
                             <X className="w-3.5 h-3.5" />
@@ -1894,10 +1899,21 @@ export default function QCEDashboard() {
                                 </div>
                                 <button
                                   className="p-1 ml-1 rounded-md text-muted-foreground/20 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 opacity-0 group-hover:opacity-100 transition-all"
-                                  onClick={async (e) => {
+                                  onClick={(e) => {
                                     e.stopPropagation();
-                                    const success = await deleteChatHistoryFile(file.fileName);
-                                    if (success) chatHistoryLoadedRef.current = false;
+                                    toast.error(`删除这条记录？`, {
+                                      description: file.displayName || file.sessionName || file.chatId,
+                                      actions: [
+                                        {
+                                          label: "确认删除",
+                                          onClick: async () => {
+                                            const success = await deleteChatHistoryFile(file.fileName);
+                                            if (success) chatHistoryLoadedRef.current = false;
+                                          },
+                                          variant: "destructive"
+                                        }
+                                      ]
+                                    })
                                   }}
                                 >
                                   <X className="w-3.5 h-3.5" />
@@ -2279,7 +2295,6 @@ export default function QCEDashboard() {
               <div className="p-6 max-w-2xl space-y-8">
                 <div className="space-y-4">
                   <div>
-                    <div className="text-xs font-medium text-muted-foreground/40 uppercase tracking-wider mb-1.5">About</div>
                     <h1 className="text-xl font-semibold tracking-tight text-foreground">QQ 聊天记录导出工具</h1>
                   </div>
                   <p className="text-sm leading-relaxed text-muted-foreground">
@@ -2618,14 +2633,9 @@ export default function QCEDashboard() {
               className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-background rounded-2xl shadow-xl z-50 overflow-hidden"
             >
               <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">HTML 导出</h3>
-                    <p className="text-xs text-muted-foreground">可视化聊天记录</p>
-                  </div>
+                <div>
+                  <h3 className="font-medium text-foreground">HTML 导出</h3>
+                  <p className="text-xs text-muted-foreground">可视化聊天记录</p>
                 </div>
                 <button
                   onClick={() => setShowHtmlHelp(false)}
@@ -2697,14 +2707,9 @@ export default function QCEDashboard() {
               className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-background rounded-2xl shadow-xl z-50 overflow-hidden"
             >
               <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
-                    <Database className="w-5 h-5 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">JSON 导出</h3>
-                    <p className="text-xs text-muted-foreground">结构化数据格式</p>
-                  </div>
+                <div>
+                  <h3 className="font-medium text-foreground">JSON 导出</h3>
+                  <p className="text-xs text-muted-foreground">结构化数据格式</p>
                 </div>
                 <button
                   onClick={() => setShowJsonHelp(false)}
@@ -2780,14 +2785,9 @@ export default function QCEDashboard() {
               className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-background rounded-2xl shadow-xl z-50 overflow-hidden"
             >
               <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
-                    <Database className="w-5 h-5 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">JSONL 分块导出</h3>
-                    <p className="text-xs text-muted-foreground">适合大规模数据处理</p>
-                  </div>
+                <div>
+                  <h3 className="font-medium text-foreground">JSONL 分块导出</h3>
+                  <p className="text-xs text-muted-foreground">适合大规模数据处理</p>
                 </div>
                 <button
                   onClick={() => setShowJsonlHelp(false)}
@@ -2887,14 +2887,9 @@ export default function QCEDashboard() {
               className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-background rounded-2xl shadow-xl z-50 overflow-hidden"
             >
               <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
-                    <Package className="w-5 h-5 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground">流式 HTML ZIP 导出</h3>
-                    <p className="text-xs text-muted-foreground">分块 HTML + 资源打包</p>
-                  </div>
+                <div>
+                  <h3 className="font-medium text-foreground">流式 HTML ZIP 导出</h3>
+                  <p className="text-xs text-muted-foreground">分块 HTML + 资源打包</p>
                 </div>
                 <button
                   onClick={() => setShowStreamingZipHelp(false)}
