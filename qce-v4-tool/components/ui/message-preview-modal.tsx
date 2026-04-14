@@ -369,9 +369,6 @@ export function MessagePreviewModal({ open, onClose, chat, onExport }: MessagePr
 
             {!loading && !error && messages.length === 0 && (
               <div className="flex flex-col items-center justify-center py-20">
-                <div className="w-10 h-10 rounded-full bg-muted/50 flex items-center justify-center mb-3">
-                  <MessageSquare className="w-5 h-5 text-muted-foreground/40" />
-                </div>
                 <p className="text-sm text-muted-foreground">{searchQuery ? '没有找到匹配的消息' : '暂无消息'}</p>
               </div>
             )}

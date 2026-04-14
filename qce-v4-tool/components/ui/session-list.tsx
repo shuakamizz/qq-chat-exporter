@@ -235,9 +235,10 @@ export function SessionList({
         </div>
 
         {!batchMode && (
-          <div className="flex items-center gap-1.5 flex-shrink-0">
+          <div className="flex items-center gap-1 flex-shrink-0">
             <Button
               size="sm"
+              variant="outline"
               className="h-8 px-4 text-xs rounded-full"
               onClick={(e: React.MouseEvent) => {
                 e.stopPropagation()
@@ -253,7 +254,7 @@ export function SessionList({
             <Button
               size="sm"
               variant="ghost"
-              className="h-7 px-2 text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              className="h-8 px-3 text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={(e: React.MouseEvent) => {
                 e.stopPropagation()
                 onPreviewChat?.(item.type, item.id, item.name, { 
@@ -266,10 +267,8 @@ export function SessionList({
             </Button>
             {isGroup && group && (
               <div className="relative">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                <button
+                  className="h-8 w-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/[0.04] dark:hover:bg-white/[0.06]"
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation()
                     const menu = e.currentTarget.nextElementSibling as HTMLElement
@@ -281,10 +280,10 @@ export function SessionList({
                     <circle cx="7.5" cy="1.5" r="1.5"/>
                     <circle cx="13.5" cy="1.5" r="1.5"/>
                   </svg>
-                </Button>
-                <div className="hidden absolute right-0 top-full mt-1 py-1.5 w-36 bg-card rounded-xl border border-black/[0.06] dark:border-white/[0.06] shadow-xl z-50" data-session-dropdown>
+                </button>
+                <div className="hidden absolute right-0 top-full mt-1 p-1.5 w-40 bg-card rounded-xl border border-black/[0.06] dark:border-white/[0.06] shadow-xl z-50" data-session-dropdown>
                   <button
-                    className="w-full px-3 py-2 text-left text-[13px] text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg mx-0 transition-colors"
+                    className="w-full px-3 py-2 text-left text-[13px] text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       onExportGroupAvatars?.(group.groupCode, group.groupName)
@@ -295,7 +294,7 @@ export function SessionList({
                     {avatarExportLoading === group.groupCode ? '导出中...' : '导出头像'}
                   </button>
                   <button
-                    className="w-full px-3 py-2 text-left text-[13px] text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg mx-0 transition-colors"
+                    className="w-full px-3 py-2 text-left text-[13px] text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       onOpenEssenceModal?.(group.groupCode, group.groupName)
@@ -305,7 +304,7 @@ export function SessionList({
                     精华消息
                   </button>
                   <button
-                    className="w-full px-3 py-2 text-left text-[13px] text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg mx-0 transition-colors"
+                    className="w-full px-3 py-2 text-left text-[13px] text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.04] rounded-lg transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       onOpenGroupFilesModal?.(group.groupCode, group.groupName)

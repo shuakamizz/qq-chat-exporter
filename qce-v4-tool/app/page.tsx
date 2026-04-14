@@ -1574,11 +1574,20 @@ export default function QCEDashboard() {
                                 actions: [
                                   {
                                     label: "确认删除",
-                                    onClick: async () => {
-                                      const success = await deleteTask(task.id)
-                                      if (success) {
-                                        tasksLoadedRef.current = false
-                                      }
+                                    onClick: () => {
+                                      toast.promise(
+                                        (async () => {
+                                          const success = await deleteTask(task.id)
+                                          if (!success) throw new Error("删除失败")
+                                          tasksLoadedRef.current = false
+                                          return success
+                                        })(),
+                                        {
+                                          loading: "正在删除...",
+                                          success: "已删除",
+                                          error: "删除失败"
+                                        }
+                                      )
                                     },
                                     variant: "destructive"
                                   }
@@ -1716,9 +1725,20 @@ export default function QCEDashboard() {
                                 actions: [
                                   {
                                     label: "确认删除",
-                                    onClick: async () => {
-                                      const success = await deleteScheduledExport(scheduledExport.id)
-                                      if (success) await loadScheduledExports()
+                                    onClick: () => {
+                                      toast.promise(
+                                        (async () => {
+                                          const success = await deleteScheduledExport(scheduledExport.id)
+                                          if (!success) throw new Error("删除失败")
+                                          await loadScheduledExports()
+                                          return success
+                                        })(),
+                                        {
+                                          loading: "正在删除...",
+                                          success: "已删除",
+                                          error: "删除失败"
+                                        }
+                                      )
                                     },
                                     variant: "destructive"
                                   }
@@ -1908,9 +1928,20 @@ export default function QCEDashboard() {
                                       actions: [
                                         {
                                           label: "确认删除",
-                                          onClick: async () => {
-                                            const success = await deleteChatHistoryFile(file.fileName);
-                                            if (success) chatHistoryLoadedRef.current = false;
+                                          onClick: () => {
+                                            toast.promise(
+                                              (async () => {
+                                                const success = await deleteChatHistoryFile(file.fileName);
+                                                if (!success) throw new Error("删除失败");
+                                                chatHistoryLoadedRef.current = false;
+                                                return success;
+                                              })(),
+                                              {
+                                                loading: "正在删除...",
+                                                success: "已删除",
+                                                error: "删除失败"
+                                              }
+                                            )
                                           },
                                           variant: "destructive"
                                         }
