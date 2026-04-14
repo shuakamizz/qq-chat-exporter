@@ -360,7 +360,8 @@ export default function QCEDashboard() {
       
       const data = await response.json()
       if (!data.success) {
-        addNotification('error', '打开失败', data.error || '未知错误')
+        const msg = typeof data.error === 'string' ? data.error : data.error?.message || '未知错误'
+        addNotification('error', '打开失败', msg)
       }
     } catch (error) {
       console.error('[QCE] Open file location error:', error)
@@ -378,7 +379,8 @@ export default function QCEDashboard() {
       
       const data = await response.json()
       if (!data.success) {
-        addNotification('error', '打开失败', data.error || '未知错误')
+        const msg = typeof data.error === 'string' ? data.error : data.error?.message || '未知错误'
+        addNotification('error', '打开失败', msg)
       }
     } catch (error) {
       console.error('[QCE] Open export directory error:', error)
